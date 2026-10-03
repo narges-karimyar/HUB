@@ -4,7 +4,7 @@ body {
 }
 #cardpro1 {
 }
-span {
+.span {
   width: 26px;
   height: 26px;
   display: flex;

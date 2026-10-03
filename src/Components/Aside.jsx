@@ -33,7 +33,7 @@ export default function Aside({ open }) {
       </div>
       <hr className="text-gray-400" />
       <Link to="/" className={link}>
-        <span>
+        <span className="span">
           {" "}
           <FaStore size={12} color={c} />
         </span>
@@ -41,7 +41,7 @@ export default function Aside({ open }) {
       </Link>
 
       <Link to="/appointments" className={link}>
-        <span>
+        <span className="span">
           {" "}
           <FaCreditCard size={12} color={c} />
         </span>
@@ -49,7 +49,7 @@ export default function Aside({ open }) {
       </Link>
 
       <Link to="/find-doctor" className={link}>
-        <span>
+        <span className="span">
           {" "}
           <FaBuilding size={12} color={c} />
         </span>
@@ -57,7 +57,7 @@ export default function Aside({ open }) {
       </Link>
 
       <Link to="/find-clinic" className={link}>
-        <span>
+        <span className="span">
           {" "}
           <FaStore size={12} color={c} />
         </span>
@@ -65,7 +65,7 @@ export default function Aside({ open }) {
       </Link>
 
       <Link to="/chat" className={link}>
-        <span>
+        <span className="span">
           {" "}
           <FaComment size={12} color={c} />
         </span>
@@ -73,7 +73,7 @@ export default function Aside({ open }) {
       </Link>
 
       <Link to="/marketplace" className={link}>
-        <span>
+        <span className="span">
           {" "}
           <FaCartShopping size={12} color={c} />
         </span>
@@ -81,7 +81,7 @@ export default function Aside({ open }) {
       </Link>
 
       <Link to="/pharmacy" className={link}>
-        <span>
+        <span className="span">
           {" "}
           <FaRocket size={12} color={c} />
         </span>
@@ -89,7 +89,7 @@ export default function Aside({ open }) {
       </Link>
 
       <Link to="/dependents" className={link}>
-        <span>
+        <span className="span">
           {" "}
           <FaFileLines size={12} color={c} />
         </span>
@@ -97,7 +97,7 @@ export default function Aside({ open }) {
       </Link>
 
       <Link to="/account" className={link}>
-        <span>
+        <span className="span">
           {" "}
           <FaScrewdriverWrench size={12} color={c} />
         </span>
@@ -105,7 +105,7 @@ export default function Aside({ open }) {
       </Link>
 
       <Link to="/settings" className={link}>
-        <span>
+        <span className="span">
           {" "}
           <FaGear size={12} color={c} />
         </span>
