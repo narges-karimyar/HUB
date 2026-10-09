@@ -20,7 +20,7 @@ export default function Aside({ open }) {
   return (
     <aside
       className={`shrink-0 transition-all duration-300 m-2 h-screen sticky top-0 overflow-y-auto overflow-x-hidden max-lg:hidden ${
-        open ? "w-64 p-7" : "w-20 p-2"
+        open ? "w-64 " : "w-20 "
       }`}
     >
       <div className={`flex m-2 ${open ? "" : "justify-center"}`}>
