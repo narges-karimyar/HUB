@@ -26,7 +26,13 @@ export default function Findpharmacy() {
             </p>
           </div>
 
-          <FaBars onClick={() => setOpen(!open)} className="cursor-pointer" />
+          <button
+            onClick={() => setOpen(!open)}
+            className="cursor-pointer p-2"
+            aria-label="Toggle sidebar"
+          >
+            <FaBars />
+          </button>
           <div className="search-box relative w-[250px] max-lg:w-[150px] max-[600px]:w-full max-[600px]:order-3">
             <FaMagnifyingGlass className="absolute left-2.5 top-1/2 -translate-y-1/2 text-[rgb(112,113,115)]" />
             <input

@@ -17,7 +17,11 @@ A responsive healthcare dashboard where users can find doctors, clinics, and man
 - Sidebar navigation
 - Find Doctor page
 - Find Clinic page
+- my dependents page
+- Find pharmacy page
 - Find Market Place
+- MY acount
+- setting
 - Responsive design
 - Easy page navigation with React Router
 

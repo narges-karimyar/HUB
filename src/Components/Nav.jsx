@@ -8,7 +8,7 @@ export default function Layout({ onLogout }) {
 
   return (
     <div className="flex min-h-screen">
-      <Aside open={open} />
+      <Aside open={open} setOpen={setOpen} />
       <div className="flex-1 min-w-0 p-6">
         <Outlet context={{ open, setOpen, onLogout }} />
       </div>

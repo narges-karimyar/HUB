@@ -38,10 +38,13 @@ export default function FindClinic() {
           </div>
 
           {/* Menu Button */}
-          <FaBars
+          <button
             onClick={() => setOpen(!open)}
-            className="cursor-pointer text-xl"
-          />
+            className="cursor-pointer p-2"
+            aria-label="Toggle sidebar"
+          >
+            <FaBars />
+          </button>
 
           {/* Search Box */}
           <div className="relative order-3 w-full sm:w-[250px] md:order-none md:w-[200px] lg:w-[250px]">
@@ -107,7 +110,7 @@ export default function FindClinic() {
       </div>
 
       {/* map and list  */}
-      <div className="map-page  mt-5">
+      <div className="parttwo  map-page  mt-5">
         {/* TOP TABS */}
         <div className="view-tabs flex gap-2.5 mb-4">
           <button

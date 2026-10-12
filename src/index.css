@@ -2,8 +2,7 @@
 body {
   background-color: rgba(225, 229, 229, 0.336);
 }
-#cardpro1 {
-}
+
 .span {
   width: 26px;
   height: 26px;
@@ -50,7 +49,7 @@ body {
 }
 @media (max-width: 768px) {
   .parttwo {
-    margin-top: 150px;
+    margin-top: 300px;
   }
 }
 

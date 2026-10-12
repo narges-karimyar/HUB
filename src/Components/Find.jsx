@@ -32,11 +32,13 @@ export default function FindDoctor() {
           </div>
 
           {/* Menu Button */}
-          <FaBars
+          <button
             onClick={() => setOpen(!open)}
-            className="cursor-pointer text-xl"
-          />
-
+            className="cursor-pointer p-2"
+            aria-label="Toggle sidebar"
+          >
+            <FaBars />
+          </button>
           {/* Search Box */}
           <div className="relative order-3 w-full sm:w-[250px] md:order-none md:w-[200px] lg:w-[250px]">
             <FaMagnifyingGlass className="absolute left-3 top-1/2 -translate-y-1/2 text-[rgb(112,113,115)]" />
@@ -98,7 +100,7 @@ export default function FindDoctor() {
           </div>
         </div>
       </div>
-      <section className="parttwo">
+      <section className="parttwo md:py-16 md:mt-[52px] sm:mt-[30px]">
         <h1 className="sm:pt-7">Special Services</h1>
         <div className="services-container">
           <div className="service-card">
