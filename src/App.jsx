@@ -7,7 +7,7 @@ import Login from "./Components/Account";
 import FindDoctor from "./Components/Find";
 import FindClinic from "./Components/Clinic";
 import FindMarketplace from "./Components/FindMarketplace";
-
+import FindPharmacy from "./Components/FindPharmacy";
 export default function App() {
   const [logged, setLogged] = useState(false);
   if (logged === false) {
@@ -23,7 +23,7 @@ export default function App() {
           <Route path="/find-clinic" element={<FindClinic />} />
           <Route path="/chat" element={<h1>Chat</h1>} />
           <Route path="/marketplace" element={<FindMarketplace />} />
-          <Route path="/pharmacy" element={<h1>Find Pharmacy</h1>} />
+          <Route path="/pharmacy" element={<FindPharmacy />} />
           <Route path="/dependents" element={<h1>My Dependents</h1>} />
           <Route path="/settings" element={<h1>Settings</h1>} />
         </Route>
