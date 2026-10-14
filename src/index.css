@@ -66,6 +66,16 @@ body {
   text-align: center;
 }
 
+/* setiing */
+.boxbg {
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  border-radius: 12px;
+  height: 350px;
+  width: 230px;
+  padding: 20px;
+  margin: 0;
+}
+
 .services-container {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -140,6 +150,7 @@ body {
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
   border-radius: 12px;
   height: auto;
+  margin: 0;
 
   margin-top: 50px;
 }
