@@ -70,7 +70,7 @@ body {
 .boxbg {
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
   border-radius: 12px;
-  height: 350px;
+  height: 320px;
   width: 230px;
   padding: 20px;
   margin: 0;
@@ -151,6 +151,7 @@ body {
   border-radius: 12px;
   height: auto;
   margin: 0;
+  padding: 12px;
 
   margin-top: 50px;
 }

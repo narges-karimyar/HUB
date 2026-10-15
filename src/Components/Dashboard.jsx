@@ -349,14 +349,13 @@ export default function Dashboard() {
         </div>
       </div>
 
-      <footer className="flex flex-col gap-4 px-4 py-5 text-xs text-[#4b5563] sm:flex-row sm:justify-between sm:items-center sm:px-6 lg:px-10">
-        <p className="text-center sm:text-left">
+      <footer className=" lg:flex justify-between items-center px-10 py-5 text-xs text-[#4b5563] ">
+        <p>
           © 2026, made with{" "}
           <FaHeart className="inline text-[rgb(112,113,115)]" />{" "}
           <b className="text-[rgb(25,62,125)]">MyPiHUB</b> for a better web.
         </p>
-
-        <div className="flex flex-wrap justify-center gap-x-5 gap-y-3 items-center sm:justify-end">
+        <div className="div flex gap-[25px] items-center">
           <p>MyPatientHUB</p>
           <p>About Us</p>
           <p>Blog</p>

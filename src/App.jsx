@@ -14,6 +14,7 @@ import Settings from "./Components/Setting";
 import CircleChart from "./Components/CircleChart";
 import SecondCircle from "./Components/SecondCircle";
 import LineBarAreaChart from "./Components/LineBarAreaChart";
+
 export default function App() {
   const [logged, setLogged] = useState(false);
   if (logged === false) {

@@ -251,7 +251,7 @@ export default function MyDependents() {
             type="submit"
             className="mt-6 rounded-md px-6 py-2 text-white bg-gradient-to-r from-[#353C66] to-[#20243D] "
           >
-            Next
+            Submit
           </button>
         </form>
       </div>

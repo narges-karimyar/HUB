@@ -80,7 +80,7 @@ export default function Aside({ open, setOpen }) {
           )}
         </div>
 
-        <hr className="text-gray-400" />
+        <hr className="text-gray-200 mx-4 my-4" />
 
         {/* Dashboard */}
         <NavLink to="/" end onClick={closeMenu} className={getLinkClass}>
