@@ -19,7 +19,7 @@ export default function Login({ onLogin }) {
       setErr("Enter email or phone");
     } else if (!user.includes("@")) {
       setErr("your email should be valed");
-    } else if (pass.length < 6) {
+    } else if (pass.length <= 6) {
       setErr("Password must be 6 or more characters");
     } else {
       setErr("");

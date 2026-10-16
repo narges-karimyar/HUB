@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useState } from "react";
-import Layout from "./Components/Nav";
+import Layout from "./Components/Layout";
 import Dashboard from "./Components/Dashboard";
 import product from "./Data/Products";
 import Login from "./Components/Account";
@@ -26,6 +26,7 @@ export default function App() {
         <Route element={<Layout onLogout={() => setLogged(false)} />}>
           <Route path="/" element={<Dashboard />} />
           <Route path="/appointments" element={<h1>Appointments</h1>} />
+          <Route path="/find-doctor" element={<FindDoctor />} />
           <Route path="/find-doctor" element={<FindDoctor />} />
           <Route path="/find-clinic" element={<FindClinic />} />
           <Route path="/chat" element={<h1>Chat</h1>} />

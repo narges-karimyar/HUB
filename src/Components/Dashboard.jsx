@@ -1,4 +1,5 @@
 import { Link, useOutletContext } from "react-router-dom";
+import React, { useState } from "react";
 import {
   FaHouse,
   FaBars,
@@ -16,6 +17,19 @@ import LineBarAreaChart from "./LineBarAreaChart";
 
 export default function Dashboard() {
   const { open, setOpen, onLogout } = useOutletContext();
+  // search
+  const [search, setSearch] = useState("");
+
+  const products = [
+    { id: "cardpro1", name: "Promotion by Clinics" },
+    { id: "cardpro2", name: "Promotion by Pharmacies" },
+    { id: "cardpro3", name: "Smart Market Usage by app" },
+    { id: "cardpro4", name: "Health Index" },
+  ];
+
+  const items = products.filter((product) =>
+    product.name.toLowerCase().includes(search.toLowerCase()),
+  );
   return (
     <div className="contentTwo font-[Merriweather,serif] ">
       <header className="flex justify-between max-[600px]:flex-wrap p-5 gap-2.5 m-2.5">
@@ -37,6 +51,8 @@ export default function Dashboard() {
           <input
             type="text"
             placeholder="Search..."
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
             className="w-full py-2.5 pr-2.5 pl-[35px] border border-[#ccc] rounded-[10px]"
           />
         </div>
@@ -65,287 +81,305 @@ export default function Dashboard() {
 
         <div className="gridpart grid grid-cols-2 gap-x-5 gap-y-2.5 max-lg:grid-cols-1">
           {/* first card */}
-          <div
-            id="cardpro1"
-            className="bg-white p-[30px] max-[600px]:p-[15px] rounded-xl h-[280px] w-full  max-lg:w-full max-lg:h-auto w-full overflow-hidden"
-          >
+          {products[0].name.toLowerCase().includes(search.toLowerCase()) && (
             <div
-              id="protitle"
-              className="flex items-center justify-between mb-[15px]"
+              id="cardpro1"
+              className="bg-white p-[30px] max-[600px]:p-[15px] rounded-xl h-[280px] w-full  max-lg:w-full max-lg:h-auto w-full overflow-hidden"
             >
-              <p className="text-[#4b5563]">
-                <i>Promotion by Clinics</i>
-              </p>
-              <FaCircleExclamation className="text-[rgb(112,113,115)]" />
-            </div>
-
-            <div
-              id="procontent"
-              className="flex gap-5 max-lg:flex-col max-lg:items-center"
-            >
-              {/* image */}
               <div
-                id="probox"
-                className="flex flex-col items-center w-[200px] "
+                id="protitle"
+                className="flex items-center justify-between mb-[15px]"
               >
-                <span>
-                  <CircleChart />
-                </span>
-                <button className="mt-2.5 px-2.5 py-2 border-none rounded-md bg-[#f1f1f1] text-[10px] cursor-pointer">
-                  MORE DETAILS
-                </button>
+                <p className="text-[#4b5563]" id="name">
+                  <i>Promotion by Clinics</i>
+                </p>
+                <FaCircleExclamation className="text-[rgb(112,113,115)]" />
               </div>
 
-              <div id="clinicbox" className="flex-1">
-                <div className="card flex items-center h-[55px] gap-2.5 border-b border-[#eee]">
-                  <img
-                    src={product[1].Image}
-                    alt="Klinik Lee Healthcare"
-                    className="w-5 h-5 object-contain"
-                  />
-                  <p className="flex-1 text-xs max-[600px]:text-[11px] font-medium text-[#4b5563]">
-                    Klinik Lee Healthcare
-                  </p>
-                  <span className="text-xs font-medium text-[#6b7280]">
-                    19%
+              <div
+                id="procontent"
+                className="flex gap-5 max-lg:flex-col max-lg:items-center"
+              >
+                {/* image */}
+                <div
+                  id="probox"
+                  className="flex flex-col items-center w-[200px] "
+                >
+                  <span>
+                    <CircleChart />
                   </span>
+                  <button className="mt-2.5 px-2.5 py-2 border-none rounded-md bg-[#f1f1f1] text-[10px] cursor-pointer">
+                    MORE DETAILS
+                  </button>
                 </div>
-                <div className="card flex items-center h-[55px] gap-2.5 border-b border-[#eee]">
-                  <img
-                    src={product[2].Image}
-                    alt="Klinik Bandar Baru Nilai"
-                    className="w-3 h-3 object-contain"
-                  />
-                  <p className="flex-1 text-xs max-[600px]:text-[11px] font-medium text-[#4b5563]">
-                    Klinik Bandar Baru Nilai
-                  </p>
-                  <span className="text-xs font-medium text-[#6b7280]">4%</span>
-                </div>
-                <div className="card flex items-center h-[55px] gap-2.5 border-b border-[#eee]">
-                  <img
-                    src={product[3].Image}
-                    alt="Klinik Mediviron Giant Nilai"
-                    className="w-5 h-5 object-contain"
-                  />
-                  <p className="flex-1 text-xs max-[600px]:text-[11px] font-medium text-[#4b5563]">
-                    Klinik Mediviron Giant Nilai
-                  </p>
-                  <span className="text-xs font-medium text-[#6b7280]">
-                    10%
-                  </span>
-                </div>
-                <div className="card flex items-center h-[55px] gap-2.5 border-b border-[#eee]">
-                  <img
-                    src={product[4].Image}
-                    alt="Klinik Nilai Impian"
-                    className="w-5 h-5 object-contain"
-                  />
-                  <p className="flex-1 text-xs max-[600px]:text-[11px] font-medium text-[#4b5563]">
-                    Klinik Nilai Impian
-                  </p>
-                  <span className="text-xs font-medium text-[#6b7280]">
-                    21%
-                  </span>
+
+                <div id="clinicbox" className="flex-1">
+                  <div className="card flex items-center h-[55px] gap-2.5 border-b border-[#eee]">
+                    <img
+                      src={product[1].Image}
+                      alt="Klinik Lee Healthcare"
+                      className="w-5 h-5 object-contain"
+                    />
+                    <p className="flex-1 text-xs max-[600px]:text-[11px] font-medium text-[#4b5563]">
+                      Klinik Lee Healthcare
+                    </p>
+                    <span className="text-xs font-medium text-[#6b7280]">
+                      19%
+                    </span>
+                  </div>
+                  <div className="card flex items-center h-[55px] gap-2.5 border-b border-[#eee]">
+                    <img
+                      src={product[2].Image}
+                      alt="Klinik Bandar Baru Nilai"
+                      className="w-3 h-3 object-contain"
+                    />
+                    <p className="flex-1 text-xs max-[600px]:text-[11px] font-medium text-[#4b5563]">
+                      Klinik Bandar Baru Nilai
+                    </p>
+                    <span className="text-xs font-medium text-[#6b7280]">
+                      4%
+                    </span>
+                  </div>
+                  <div className="card flex items-center h-[55px] gap-2.5 border-b border-[#eee]">
+                    <img
+                      src={product[3].Image}
+                      alt="Klinik Mediviron Giant Nilai"
+                      className="w-5 h-5 object-contain"
+                    />
+                    <p className="flex-1 text-xs max-[600px]:text-[11px] font-medium text-[#4b5563]">
+                      Klinik Mediviron Giant Nilai
+                    </p>
+                    <span className="text-xs font-medium text-[#6b7280]">
+                      10%
+                    </span>
+                  </div>
+                  <div className="card flex items-center h-[55px] gap-2.5 border-b border-[#eee]">
+                    <img
+                      src={product[4].Image}
+                      alt="Klinik Nilai Impian"
+                      className="w-5 h-5 object-contain"
+                    />
+                    <p className="flex-1 text-xs max-[600px]:text-[11px] font-medium text-[#4b5563]">
+                      Klinik Nilai Impian
+                    </p>
+                    <span className="text-xs font-medium text-[#6b7280]">
+                      21%
+                    </span>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
+          )}
 
           {/* second card */}
-
-          <div
-            id="cardpro1"
-            className="bg-white p-[30px] max-[600px]:p-[15px] rounded-xl h-[280px] w-full  max-lg:w-full max-lg:h-auto w-full overflow-hidden"
-          >
+          {products[1].name.toLowerCase().includes(search.toLowerCase()) && (
             <div
-              id="protitle"
-              className="flex items-center justify-between mb-[15px]"
+              id="cardpro2"
+              className="bg-white p-[30px] max-[600px]:p-[15px] rounded-xl h-[280px] w-full  max-lg:w-full max-lg:h-auto w-full overflow-hidden"
             >
-              <p className="text-[#4b5563]">
-                <i>Promotion by Pharmacies</i>
-              </p>
-              <FaCircleExclamation className="text-[rgb(112,113,115)]" />
-            </div>
-
-            <div
-              id="procontent"
-              className="flex gap-5 max-lg:flex-col max-lg:items-center"
-            >
-              {/* image */}
-              <div id="probox" className="flex flex-col items-center w-[200px]">
-                <span>
-                  <CircleChart />
-                </span>
-                <button className="mt-2.5 px-2.5 py-2 border-none rounded-md bg-[#f1f1f1] text-[10px] cursor-pointer">
-                  MORE DETAILS
-                </button>
+              <div
+                id="protitle"
+                className="flex items-center justify-between mb-[15px]"
+              >
+                <p className="text-[#4b5563]">
+                  <i>Promotion by Pharmacies</i>
+                </p>
+                <FaCircleExclamation className="text-[rgb(112,113,115)]" />
               </div>
 
-              <div id="clinicbox" className="flex-1">
-                <div className="card flex items-center h-[55px] gap-2.5 border-b border-[#eee]">
-                  <img
-                    src={product[1].Image}
-                    alt="Klinik Lee Healthcare"
-                    className="w-5 h-5 object-contain"
-                  />
-                  <p className="flex-1 text-xs max-[600px]:text-[11px] font-medium text-[#4b5563]">
-                    Klinik Lee Healthcare
-                  </p>
-                  <span className="text-xs font-medium text-[#6b7280]">
-                    19%
+              <div
+                id="procontent"
+                className="flex gap-5 max-lg:flex-col max-lg:items-center"
+              >
+                {/* image */}
+                <div
+                  id="probox"
+                  className="flex flex-col items-center w-[200px]"
+                >
+                  <span>
+                    <CircleChart />
                   </span>
+                  <button className="mt-2.5 px-2.5 py-2 border-none rounded-md bg-[#f1f1f1] text-[10px] cursor-pointer">
+                    MORE DETAILS
+                  </button>
                 </div>
-                <div className="card flex items-center h-[55px] gap-2.5 border-b border-[#eee]">
-                  <img
-                    src={product[2].Image}
-                    alt="Klinik Bandar Baru Nilai"
-                    className="w-3 h-3 object-contain"
-                  />
-                  <p className="flex-1 text-xs max-[600px]:text-[11px] font-medium text-[#4b5563]">
-                    Klinik Bandar Baru Nilai
-                  </p>
-                  <span className="text-xs font-medium text-[#6b7280]">4%</span>
-                </div>
-                <div className="card flex items-center h-[55px] gap-2.5 border-b border-[#eee]">
-                  <img
-                    src={product[3].Image}
-                    alt="Klinik Mediviron Giant Nilai"
-                    className="w-5 h-5 object-contain"
-                  />
-                  <p className="flex-1 text-xs max-[600px]:text-[11px] font-medium text-[#4b5563]">
-                    Klinik Mediviron Giant Nilai
-                  </p>
-                  <span className="text-xs font-medium text-[#6b7280]">
-                    10%
-                  </span>
-                </div>
-                <div className="card flex items-center h-[55px] gap-2.5 border-b border-[#eee]">
-                  <img
-                    src={product[4].Image}
-                    alt="Klinik Nilai Impian"
-                    className="w-5 h-5 object-contain"
-                  />
-                  <p className="flex-1 text-xs max-[600px]:text-[11px] font-medium text-[#4b5563]">
-                    Klinik Nilai Impian
-                  </p>
-                  <span className="text-xs font-medium text-[#6b7280]">
-                    21%
-                  </span>
+
+                <div id="clinicbox" className="flex-1">
+                  <div className="card flex items-center h-[55px] gap-2.5 border-b border-[#eee]">
+                    <img
+                      src={product[1].Image}
+                      alt="Klinik Lee Healthcare"
+                      className="w-5 h-5 object-contain"
+                    />
+                    <p className="flex-1 text-xs max-[600px]:text-[11px] font-medium text-[#4b5563]">
+                      Klinik Lee Healthcare
+                    </p>
+                    <span className="text-xs font-medium text-[#6b7280]">
+                      19%
+                    </span>
+                  </div>
+                  <div className="card flex items-center h-[55px] gap-2.5 border-b border-[#eee]">
+                    <img
+                      src={product[2].Image}
+                      alt="Klinik Bandar Baru Nilai"
+                      className="w-3 h-3 object-contain"
+                    />
+                    <p className="flex-1 text-xs max-[600px]:text-[11px] font-medium text-[#4b5563]">
+                      Klinik Bandar Baru Nilai
+                    </p>
+                    <span className="text-xs font-medium text-[#6b7280]">
+                      4%
+                    </span>
+                  </div>
+                  <div className="card flex items-center h-[55px] gap-2.5 border-b border-[#eee]">
+                    <img
+                      src={product[3].Image}
+                      alt="Klinik Mediviron Giant Nilai"
+                      className="w-5 h-5 object-contain"
+                    />
+                    <p className="flex-1 text-xs max-[600px]:text-[11px] font-medium text-[#4b5563]">
+                      Klinik Mediviron Giant Nilai
+                    </p>
+                    <span className="text-xs font-medium text-[#6b7280]">
+                      10%
+                    </span>
+                  </div>
+                  <div className="card flex items-center h-[55px] gap-2.5 border-b border-[#eee]">
+                    <img
+                      src={product[4].Image}
+                      alt="Klinik Nilai Impian"
+                      className="w-5 h-5 object-contain"
+                    />
+                    <p className="flex-1 text-xs max-[600px]:text-[11px] font-medium text-[#4b5563]">
+                      Klinik Nilai Impian
+                    </p>
+                    <span className="text-xs font-medium text-[#6b7280]">
+                      21%
+                    </span>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
+          )}
           {/* third card */}
-          <div
-            id="cardpro1"
-            className="bg-white p-[30px] max-[600px]:p-[15px] rounded-xl h-[300px] w-full  max-lg:w-full max-lg:h-auto w-full overflow-hidden"
-          >
+          {products[2].name.toLowerCase().includes(search.toLowerCase()) && (
             <div
-              id="protitle"
-              className="flex items-center justify-between mb-[15px]"
+              id="cardpro2"
+              className="bg-white p-[30px] max-[600px]:p-[15px] rounded-xl h-[300px] w-full  max-lg:w-full max-lg:h-auto w-full overflow-hidden"
             >
-              <p className="text-[#4b5563]">
-                <i>Smart Market Usage by app</i>
-              </p>
-              <FaCircleExclamation className="text-[rgb(112,113,115)]" />
-            </div>
-
-            <div
-              id="procontent"
-              className="flex gap-5 max-lg:flex-col max-lg:items-center"
-            >
-              {/* image */}
-              <div id="probox" className="flex flex-col items-center w-[200px]">
-                <span>
-                  <SecondCircle />
-                </span>
-                <button className="mt-2.5 px-2.5 py-2 border-none rounded-md bg-[#f1f1f1] text-[10px] cursor-pointer ">
-                  See ALL Reeferrals
-                </button>
+              <div
+                id="protitle"
+                className="flex items-center justify-between mb-[15px]"
+              >
+                <p className="text-[#4b5563]">
+                  <i>Smart Market Usage by app</i>
+                </p>
+                <FaCircleExclamation className="text-[rgb(112,113,115)]" />
               </div>
 
-              <div id="clinicbox" className="flex-1">
-                <div className="card flex items-center h-[55px] gap-2.5 border-b border-[#eee]">
-                  <img
-                    src={product[1].Image}
-                    alt="Klinik Lee Healthcare"
-                    className="w-5 h-5 object-contain"
-                  />
-                  <p className="flex-1 text-xs max-[600px]:text-[11px] font-medium text-[#4b5563]">
-                    Food Panda
-                  </p>
-                  <span className="text-xs font-medium text-[#6b7280]">
-                    19%
+              <div
+                id="procontent"
+                className="flex gap-5 max-lg:flex-col max-lg:items-center"
+              >
+                {/* image */}
+                <div
+                  id="probox"
+                  className="flex flex-col items-center w-[200px]"
+                >
+                  <span>
+                    <SecondCircle />
                   </span>
+                  <button className="mt-2.5 px-2.5 py-2 border-none rounded-md bg-[#f1f1f1] text-[10px] cursor-pointer ">
+                    See ALL Reeferrals
+                  </button>
                 </div>
-                <div className="card flex items-center h-[55px] gap-2.5 border-b border-[#eee]">
-                  <img
-                    src={product[2].Image}
-                    alt="Klinik Bandar Baru Nilai"
-                    className="w-3 h-3 object-contain"
-                  />
-                  <p className="flex-1 text-xs max-[600px]:text-[11px] font-medium text-[#4b5563]">
-                    Grab Food
-                  </p>
-                  <span className="text-xs font-medium text-[#6b7280]">4%</span>
-                </div>
-                <div className="card flex items-center h-[55px] gap-2.5 border-b border-[#eee]">
-                  <img
-                    src={product[3].Image}
-                    alt="Klinik Mediviron Giant Nilai"
-                    className="w-5 h-5 object-contain"
-                  />
-                  <p className="flex-1 text-xs max-[600px]:text-[11px] font-medium text-[#4b5563]">
-                    Zomato
-                  </p>
-                  <span className="text-xs font-medium text-[#6b7280]">
-                    10%
-                  </span>
-                </div>
-                <div className="card flex items-center h-[55px] gap-2.5 border-b border-[#eee]">
-                  <img
-                    src={product[4].Image}
-                    alt="Klinik Nilai Impian"
-                    className="w-5 h-5 object-contain"
-                  />
-                  <p className="flex-1 text-xs max-[600px]:text-[11px] font-medium text-[#4b5563]">
-                    Lazada
-                  </p>
-                  <span className="text-xs font-medium text-[#6b7280]">
-                    21%
-                  </span>
+
+                <div id="clinicbox" className="flex-1">
+                  <div className="card flex items-center h-[55px] gap-2.5 border-b border-[#eee]">
+                    <img
+                      src={product[1].Image}
+                      alt="Klinik Lee Healthcare"
+                      className="w-5 h-5 object-contain"
+                    />
+                    <p className="flex-1 text-xs max-[600px]:text-[11px] font-medium text-[#4b5563]">
+                      Food Panda
+                    </p>
+                    <span className="text-xs font-medium text-[#6b7280]">
+                      19%
+                    </span>
+                  </div>
+                  <div className="card flex items-center h-[55px] gap-2.5 border-b border-[#eee]">
+                    <img
+                      src={product[2].Image}
+                      alt="Klinik Bandar Baru Nilai"
+                      className="w-3 h-3 object-contain"
+                    />
+                    <p className="flex-1 text-xs max-[600px]:text-[11px] font-medium text-[#4b5563]">
+                      Grab Food
+                    </p>
+                    <span className="text-xs font-medium text-[#6b7280]">
+                      4%
+                    </span>
+                  </div>
+                  <div className="card flex items-center h-[55px] gap-2.5 border-b border-[#eee]">
+                    <img
+                      src={product[3].Image}
+                      alt="Klinik Mediviron Giant Nilai"
+                      className="w-5 h-5 object-contain"
+                    />
+                    <p className="flex-1 text-xs max-[600px]:text-[11px] font-medium text-[#4b5563]">
+                      Zomato
+                    </p>
+                    <span className="text-xs font-medium text-[#6b7280]">
+                      10%
+                    </span>
+                  </div>
+                  <div className="card flex items-center h-[55px] gap-2.5 border-b border-[#eee]">
+                    <img
+                      src={product[4].Image}
+                      alt="Klinik Nilai Impian"
+                      className="w-5 h-5 object-contain"
+                    />
+                    <p className="flex-1 text-xs max-[600px]:text-[11px] font-medium text-[#4b5563]">
+                      Lazada
+                    </p>
+                    <span className="text-xs font-medium text-[#6b7280]">
+                      21%
+                    </span>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
+          )}
 
           {/* fourth card */}
+          {products[3].name.toLowerCase().includes(search.toLowerCase()) && (
+            <div
+              id="cardpro4"
+              className="bg-white p-[24px] max-[600px]:p-[15px] rounded-[24px] h-[280px] w-full overflow-hidden"
+            >
+              {/* Title */}
+              <div className="mb-1">
+                <p className="text-[#71809d] text-[20px] font-semibold">
+                  Health Index
+                </p>
 
-          <div
-            id="cardpro1"
-            className="bg-white p-[24px] max-[600px]:p-[15px] rounded-[24px] h-[280px] w-full overflow-hidden"
-          >
-            {/* Title */}
-            <div className="mb-1">
-              <p className="text-[#71809d] text-[20px] font-semibold">
-                Health Index
-              </p>
+                <div className="flex items-center gap-2">
+                  <h2 className="text-[#344a70] text-[20px] font-bold leading-tight">
+                    70%
+                  </h2>
+                  <span className="text-[#65c900] text-[20px] font-bold">
+                    +3%
+                  </span>
+                </div>
+              </div>
 
-              <div className="flex items-center gap-2">
-                <h2 className="text-[#344a70] text-[20px] font-bold leading-tight">
-                  70%
-                </h2>
-                <span className="text-[#65c900] text-[20px] font-bold">
-                  +3%
-                </span>
+              {/* Curved chart */}
+              <div className="w-full h-[165px] mt-2">
+                <LineBarAreaChart />
               </div>
             </div>
-
-            {/* Curved chart */}
-            <div className="w-full h-[165px] mt-2">
-              <LineBarAreaChart />
-            </div>
-          </div>
+          )}
         </div>
       </div>
 

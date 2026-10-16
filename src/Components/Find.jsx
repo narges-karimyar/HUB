@@ -16,6 +16,19 @@ export default function FindDoctor() {
   const { open, setOpen } = useOutletContext();
   const [view, setView] = useState("map"); // "map" | "list"
   const [sort, setSort] = useState("next"); // "next" | "distance"
+  // search
+  const [search, setSearch] = useState("");
+
+  const products = [
+    { id: "card1", name: "Internal MD" },
+    { id: "card2", name: "emergencey " },
+    { id: "card3", name: "Services" },
+    { id: "card4", name: "urgent card " },
+  ];
+
+  const items = products.filter((product) =>
+    product.name.toLowerCase().includes(search.toLowerCase()),
+  );
   return (
     <>
       <div className="background min-h-100 text-white ">
@@ -46,6 +59,8 @@ export default function FindDoctor() {
             <input
               type="text"
               placeholder="Search..."
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
               className="w-full rounded-[10px] border border-[#ccc] bg-white py-2.5 pl-[35px] pr-2.5 text-black outline-none"
             />
           </div>
@@ -103,57 +118,68 @@ export default function FindDoctor() {
       <section className="parttwo md:py-16 md:mt-[52px] sm:mt-[30px]">
         <h1 className="sm:pt-7">Special Services</h1>
         <div className="services-container">
-          <div className="service-card">
-            <img src={product[10].Image} alt="" />
-            <span>
-              <h3>Primary Care and Internal MD</h3>
-              <p>
-                our Doctors Partner with you to help you to reach your welness
-              </p>
-            </span>
-            <Link to="/find-clinic">
-              <FaChevronDown />
-            </Link>
-          </div>
+          {/* card one  */}
+          {products[0].name.toLowerCase().includes(search.toLowerCase()) && (
+            <div className="service-card" id="card1">
+              <img src={product[10].Image} alt="" />
+              <span>
+                <h3>Primary Care and Internal MD</h3>
+                <p>
+                  our Doctors Partner with you to help you to reach your welness
+                </p>
+              </span>
+              <Link to="/find-clinic">
+                <FaChevronDown />
+              </Link>
+            </div>
+          )}
+          {/* card two */}
 
-          <div className="service-card">
-            <img src={product[11].Image} alt="" />
-            <span>
-              <h3>Primary Care and Internal MD</h3>
-              <p>
-                our Doctors Partner with you to help you to reach your welness
-              </p>
-            </span>
-            <Link to="/find-clinic">
-              <FaChevronDown />
-            </Link>
-          </div>
+          {products[1].name.toLowerCase().includes(search.toLowerCase()) && (
+            <div className="service-card" id="card2">
+              <img src={product[11].Image} alt="" />
+              <span>
+                <h3>"emergencey care</h3>
+                <p>
+                  our Doctors Partner with you to help you to reach your welness
+                </p>
+              </span>
+              <Link to="/find-clinic">
+                <FaChevronDown />
+              </Link>
+            </div>
+          )}
 
-          <div className="service-card">
-            <img src={product[12].Image} alt="" />
-            <span>
-              <h3>Primary Care and Internal MD</h3>
-              <p>
-                our Doctors Partner with you to help you to reach your welness
-              </p>
-            </span>
-            <Link to="/find-clinic">
-              <FaChevronDown />
-            </Link>
-          </div>
-
-          <div className="service-card">
-            <img src={product[13].Image} alt="" />
-            <span>
-              <h3>Primary Care and Internal MD</h3>
-              <p>
-                our Doctors Partner with you to help you to reach your welness
-              </p>
-            </span>
-            <Link to="//find-clinic">
-              <FaChevronDown />
-            </Link>
-          </div>
+          {/* card tree */}
+          {products[2].name.toLowerCase().includes(search.toLowerCase()) && (
+            <div className="service-card" id="card3">
+              <img src={product[12].Image} alt="" />
+              <span>
+                <h3> Imaging services</h3>
+                <p>
+                  our Doctors Partner with you to help you to reach your welness
+                </p>
+              </span>
+              <Link to="/find-clinic">
+                <FaChevronDown />
+              </Link>
+            </div>
+          )}
+          {/* card 4 */}
+          {products[3].name.toLowerCase().includes(search.toLowerCase()) && (
+            <div className="service-card" id="card4">
+              <img src={product[13].Image} alt="" />
+              <span>
+                <h3>urgent care</h3>
+                <p>
+                  our Doctors Partner with you to help you to reach your welness
+                </p>
+              </span>
+              <Link to="//find-clinic">
+                <FaChevronDown />
+              </Link>
+            </div>
+          )}
         </div>
       </section>
 
