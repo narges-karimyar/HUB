@@ -10,6 +10,9 @@ import {
   FaHeart,
 } from "react-icons/fa6";
 import product from "../Data/Products";
+import CircleChart from "./CircleChart";
+import SecondCircle from "./SecondCircle";
+import LineBarAreaChart from "./LineBarAreaChart";
 
 export default function Dashboard() {
   const { open, setOpen, onLogout } = useOutletContext();
@@ -85,11 +88,9 @@ export default function Dashboard() {
                 id="probox"
                 className="flex flex-col items-center w-[200px] "
               >
-                <img
-                  src={product[5].Image}
-                  alt="Promotion"
-                  className="w-250px] h-[130px] max-[600px]:w-[200px] max-[600px]:h-[90px] object-cover rounded-lg"
-                />
+                <span>
+                  <CircleChart />
+                </span>
                 <button className="mt-2.5 px-2.5 py-2 border-none rounded-md bg-[#f1f1f1] text-[10px] cursor-pointer">
                   MORE DETAILS
                 </button>
@@ -172,11 +173,9 @@ export default function Dashboard() {
             >
               {/* image */}
               <div id="probox" className="flex flex-col items-center w-[200px]">
-                <img
-                  src={product[6].Image}
-                  alt="Promotion"
-                  className="w-250px] h-[130px] max-[600px]:w-[200px] max-[600px]:h-[90px] object-cover rounded-lg"
-                />
+                <span>
+                  <CircleChart />
+                </span>
                 <button className="mt-2.5 px-2.5 py-2 border-none rounded-md bg-[#f1f1f1] text-[10px] cursor-pointer">
                   MORE DETAILS
                 </button>
@@ -239,7 +238,7 @@ export default function Dashboard() {
           {/* third card */}
           <div
             id="cardpro1"
-            className="bg-white p-[30px] max-[600px]:p-[15px] rounded-xl h-[280px] w-full  max-lg:w-full max-lg:h-auto w-full overflow-hidden"
+            className="bg-white p-[30px] max-[600px]:p-[15px] rounded-xl h-[300px] w-full  max-lg:w-full max-lg:h-auto w-full overflow-hidden"
           >
             <div
               id="protitle"
@@ -257,12 +256,10 @@ export default function Dashboard() {
             >
               {/* image */}
               <div id="probox" className="flex flex-col items-center w-[200px]">
-                <img
-                  src={product[7].Image}
-                  alt="Promotion"
-                  className="w-250px] h-[130px] max-[600px]:w-[200px] max-[600px]:h-[90px] object-cover rounded-lg"
-                />
-                <button className="mt-2.5 px-2.5 py-2 border-none rounded-md bg-[#f1f1f1] text-[10px] cursor-pointer">
+                <span>
+                  <SecondCircle />
+                </span>
+                <button className="mt-2.5 px-2.5 py-2 border-none rounded-md bg-[#f1f1f1] text-[10px] cursor-pointer ">
                   See ALL Reeferrals
                 </button>
               </div>
@@ -346,71 +343,19 @@ export default function Dashboard() {
 
             {/* Curved chart */}
             <div className="w-full h-[165px] mt-2">
-              <svg
-                viewBox="0 0 700 165"
-                preserveAspectRatio="none"
-                className="w-full h-full"
-              >
-                <defs>
-                  <linearGradient
-                    id="healthGradient"
-                    x1="0"
-                    y1="0"
-                    x2="0"
-                    y2="1"
-                  >
-                    <stop offset="0%" stopColor="#344a70" stopOpacity="0.10" />
-                    <stop
-                      offset="100%"
-                      stopColor="#344a70"
-                      stopOpacity="0.02"
-                    />
-                  </linearGradient>
-                </defs>
-
-                <path
-                  d="M 0 130
-           C 35 136, 65 153, 100 140
-           S 155 102, 195 105
-           S 250 125, 290 88
-           S 345 45, 380 75
-           S 430 110, 465 65
-           S 515 18, 555 43
-           S 610 65, 645 40
-           S 680 12, 700 0
-           L 700 165 L 0 165 Z"
-                  fill="url(#healthGradient)"
-                />
-
-                <path
-                  d="M 0 130
-           C 35 136, 65 153, 100 140
-           S 155 102, 195 105
-           S 250 125, 290 88
-           S 345 45, 380 75
-           S 430 110, 465 65
-           S 515 18, 555 43
-           S 610 65, 645 40
-           S 680 12, 700 0"
-                  fill="none"
-                  stroke="#344a70"
-                  strokeWidth="3"
-                  vectorEffect="non-scaling-stroke"
-                />
-              </svg>
+              <LineBarAreaChart />
             </div>
           </div>
         </div>
       </div>
 
-      <footer className="flex flex-col gap-4 px-4 py-5 text-xs text-[#4b5563] sm:flex-row sm:justify-between sm:items-center sm:px-6 lg:px-10">
-        <p className="text-center sm:text-left">
+      <footer className=" lg:flex justify-between items-center px-10 py-5 text-xs text-[#4b5563] ">
+        <p>
           © 2026, made with{" "}
           <FaHeart className="inline text-[rgb(112,113,115)]" />{" "}
           <b className="text-[rgb(25,62,125)]">MyPiHUB</b> for a better web.
         </p>
-
-        <div className="flex flex-wrap justify-center gap-x-5 gap-y-3 items-center sm:justify-end">
+        <div className="div flex gap-[25px] items-center">
           <p>MyPatientHUB</p>
           <p>About Us</p>
           <p>Blog</p>

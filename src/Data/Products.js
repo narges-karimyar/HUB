@@ -16,6 +16,7 @@ import doctorone from "../assets/doctorone.jpg";
 import doctortwo from "../assets/doctortwo.jpg";
 import firstcilinc from "../assets/firstcilinc.jpg";
 import secondclinic from "../assets/secondclinic.jpg";
+import preson from "../assets/preson.jpg";
 
 const product = [
   { id: "0", Image: logo, name: "logo" },
@@ -36,6 +37,7 @@ const product = [
   { id: "15", Image: doctortwo, name: "doctortwo" },
   { id: "16", Image: firstcilinc, name: "secondclinic" },
   { id: "17", Image: secondclinic, name: "secondclinic" },
+  { id: "18", Image: preson, name: "preson" },
 ];
 
 export default product;
