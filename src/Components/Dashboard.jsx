@@ -84,7 +84,7 @@ export default function Dashboard() {
           {products[0].name.toLowerCase().includes(search.toLowerCase()) && (
             <div
               id="cardpro1"
-              className="bg-white p-[30px] max-[600px]:p-[15px] rounded-xl h-[280px] w-full  max-lg:w-full max-lg:h-auto w-full overflow-hidden"
+              className="bg-white p-[30px] max-[600px]:p-[15px] rounded-xl h-[300px] w-full  max-lg:w-full max-lg:h-auto w-full overflow-hidden"
             >
               <div
                 id="protitle"
@@ -106,7 +106,7 @@ export default function Dashboard() {
                   className="flex flex-col items-center w-[200px] "
                 >
                   <span>
-                    <CircleChart />
+                    <SecondCircle />
                   </span>
                   <button className="mt-2.5 px-2.5 py-2 border-none rounded-md bg-[#f1f1f1] text-[10px] cursor-pointer">
                     MORE DETAILS
@@ -175,7 +175,7 @@ export default function Dashboard() {
           {products[1].name.toLowerCase().includes(search.toLowerCase()) && (
             <div
               id="cardpro2"
-              className="bg-white p-[30px] max-[600px]:p-[15px] rounded-xl h-[280px] w-full  max-lg:w-full max-lg:h-auto w-full overflow-hidden"
+              className="bg-white p-[30px] max-[600px]:p-[15px] rounded-xl h-[300px] w-full  max-lg:w-full max-lg:h-auto w-full overflow-hidden"
             >
               <div
                 id="protitle"
@@ -197,7 +197,7 @@ export default function Dashboard() {
                   className="flex flex-col items-center w-[200px]"
                 >
                   <span>
-                    <CircleChart />
+                    <SecondCircle />
                   </span>
                   <button className="mt-2.5 px-2.5 py-2 border-none rounded-md bg-[#f1f1f1] text-[10px] cursor-pointer">
                     MORE DETAILS

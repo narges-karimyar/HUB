@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { FaFacebookF } from "react-icons/fa6";
 import { FcGoogle } from "react-icons/fc";
-
+import { Link, useOutletContext } from "react-router-dom";
 const inp =
   "w-full p-[15px] border border-[#e0e0e0] rounded-lg text-[0.9rem] outline-none text-[#333] transition placeholder:text-[#aaa] focus:border-[#9c27b0] focus:shadow-[0_0_0_3px_rgba(156,39,176,0.1)]";
 const soc =
@@ -15,12 +15,15 @@ export default function Login({ onLogin }) {
 
   function submit(e) {
     e.preventDefault();
-    if (user === "") {
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!user.trim()) {
       setErr("Enter email or phone");
-    } else if (!user.includes("@")) {
-      setErr("your email should be valed");
-    } else if (pass.length <= 6) {
-      setErr("Password must be 6 or more characters");
+    } else if (user.includes("@") && !emailRegex.test(user)) {
+      setErr("Enter a valid email address");
+    } else if (pass.length < 6) {
+      setErr("Password must be at least 6 characters");
     } else {
       setErr("");
       onLogin();
@@ -111,13 +114,14 @@ export default function Login({ onLogin }) {
           <div className="flex items-center text-center my-[25px] text-[#aaa] text-[0.8rem] font-medium before:content-[''] before:flex-1 before:border-b before:border-[#e0e0e0] before:mr-[15px] after:content-[''] after:flex-1 after:border-b after:border-[#e0e0e0] after:ml-[15px]">
             OR
           </div>
-
-          <button
-            type="button"
-            className="bg-gradient-to-r from-[#42a5f5] to-[#1e88e5] text-white p-[15px] rounded-lg font-bold text-[0.95rem] cursor-pointer w-full tracking-[0.5px] transition hover:opacity-90 hover:scale-[1.02]"
-          >
-            SIGN UP
-          </button>
+          <Link to="/SignUP">
+            <button
+              type="button"
+              className="bg-gradient-to-r from-[#42a5f5] to-[#1e88e5] text-white p-[15px] rounded-lg font-bold text-[0.95rem] cursor-pointer w-full tracking-[0.5px] transition hover:opacity-90 hover:scale-[1.02]"
+            >
+              SIGN UP
+            </button>
+          </Link>
         </div>
       </div>
 
