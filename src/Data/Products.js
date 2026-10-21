@@ -12,8 +12,10 @@ import one from "../assets/one.png";
 import second from "../assets/second.png";
 import therd from "../assets/therd.png";
 import fourth from "../assets/fourth.png";
-import doctorone from "../assets/doctorone.jpg";
-import doctortwo from "../assets/doctortwo.jpg";
+import femaledocter from "../assets/femaledocter.jpg";
+import docter from "../assets/docter.jpg";
+import kidsdocter from "../assets/kidsdocter.jpg";
+import Amaledoctor from "../assets/Amaledoctor.jpg";
 import firstcilinc from "../assets/firstcilinc.jpg";
 import secondclinic from "../assets/secondclinic.jpg";
 import preson from "../assets/preson.jpg";
@@ -33,11 +35,13 @@ const product = [
   { id: "11", Image: second, name: "second" },
   { id: "12", Image: therd, name: "therd" },
   { id: "13", Image: fourth, name: "fourth" },
-  { id: "14", Image: doctorone, name: "doctorone" },
-  { id: "15", Image: doctortwo, name: "doctortwo" },
   { id: "16", Image: firstcilinc, name: "secondclinic" },
   { id: "17", Image: secondclinic, name: "secondclinic" },
   { id: "18", Image: preson, name: "preson" },
+  { id: "19", Image: docter, name: "docter" },
+  { id: "20", Image: kidsdocter, name: "kid " },
+  { id: "21", Image: Amaledoctor, name: "aman" },
+  { id: "22", Image: femaledocter, name: "female" },
 ];
 
 export default product;

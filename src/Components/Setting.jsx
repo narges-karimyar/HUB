@@ -79,8 +79,12 @@ export default function Settings() {
             >
               log out
             </button>
-            <FaGear />
-            <FaBell />
+            <Link to="/settings">
+              <FaGear />
+            </Link>
+            <button onClick={() => alert("It is pending")}>
+              <FaBell />
+            </button>
           </div>
         </header>
       </div>

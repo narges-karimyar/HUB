@@ -1,5 +1,7 @@
 import { Link, useOutletContext } from "react-router-dom";
 import React, { useState } from "react";
+import HighlightAndZoomLineChart from "./HighlightAndZoomLineChart";
+import SimpleBarChart from "./SimpleBarChart";
 import {
   FaHouse,
   FaBars,
@@ -25,6 +27,8 @@ export default function Dashboard() {
     { id: "cardpro2", name: "Promotion by Pharmacies" },
     { id: "cardpro3", name: "Smart Market Usage by app" },
     { id: "cardpro4", name: "Health Index" },
+    { id: "cardpro5", name: "Choronic wellness" },
+    { id: "cardpro6", name: "Appointment" },
   ];
 
   const items = products.filter((product) =>
@@ -69,8 +73,12 @@ export default function Dashboard() {
           >
             log out
           </button>
-          <FaGear />
-          <FaBell />
+          <Link to="/settings">
+            <FaGear />
+          </Link>
+          <button onClick={() => alert("It is pending")}>
+            <FaBell />
+          </button>
         </div>
       </header>
 
@@ -378,6 +386,30 @@ export default function Dashboard() {
               <div className="w-full h-[165px] mt-2">
                 <LineBarAreaChart />
               </div>
+            </div>
+          )}
+          {/* 5 card */}
+          {products[4].name.toLowerCase().includes(search.toLowerCase()) && (
+            <div
+              id="cardpro5"
+              className="bg-white p-[30px] max-[600px]:p-[15px] rounded-xl h-[300px] w-full  max-lg:w-full max-lg:h-auto w-full overflow-hidden"
+            >
+              <p className="text-[#4b5563]" id="name">
+                <i>Choronic wellness</i>
+              </p>
+              <HighlightAndZoomLineChart />
+            </div>
+          )}
+          {/* 6 card  */}
+          {products[5].name.toLowerCase().includes(search.toLowerCase()) && (
+            <div
+              id="cardpro6"
+              className="bg-white p-[30px] max-[600px]:p-[15px] rounded-xl h-[300px] w-full  max-lg:w-full max-lg:h-auto w-full overflow-hidden"
+            >
+              <p className="text-[#4b5563]" id="name">
+                <i>Appointment</i>
+              </p>
+              <SimpleBarChart />
             </div>
           )}
         </div>

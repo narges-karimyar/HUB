@@ -47,17 +47,7 @@ body {
   border-radius: 10px;
   width: auto;
 }
-@media (max-width: 768px) {
-  .parttwo {
-    margin-top: 300px;
-  }
-}
 
-@media (min-width: 768px) {
-  .parttwo {
-    margin-top: 100px;
-  }
-}
 .parttwo h1 {
   margin: 0 0 30px 0;
   font-size: 32px;

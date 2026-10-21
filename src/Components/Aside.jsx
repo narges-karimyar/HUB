@@ -66,7 +66,11 @@ export default function Aside({ open, setOpen }) {
               className="h-12 w-13"
             />
 
-            {open && <p className="mt-3">MyPatientHUB</p>}
+            {open && (
+              <p className="mt-3">
+                <i>MyPatientHUB</i>
+              </p>
+            )}
           </div>
 
           {open && (
@@ -86,16 +90,6 @@ export default function Aside({ open, setOpen }) {
         <NavLink to="/" end onClick={closeMenu} className={getLinkClass}>
           <FaStore size={15} className="shrink-0" />
           {open && <p className="text-sm">Dashboard</p>}
-        </NavLink>
-
-        {/* Appointments */}
-        <NavLink
-          to="/appointments"
-          onClick={closeMenu}
-          className={getLinkClass}
-        >
-          <FaCreditCard size={15} className="shrink-0" />
-          {open && <p className="text-sm">Appointments</p>}
         </NavLink>
 
         {/* Find Doctor */}

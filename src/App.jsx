@@ -16,7 +16,8 @@ import CircleChart from "./Components/CircleChart";
 import SecondCircle from "./Components/SecondCircle";
 import LineBarAreaChart from "./Components/LineBarAreaChart";
 import SignUP from "./Components/SignUP";
-
+import HighlightAndZoomLineChart from "./Components/HighlightAndZoomLineChart";
+import SimpleBarChart from "./Components/SimpleBarChart";
 export default function App() {
   const [logged, setLogged] = useState(false);
 
