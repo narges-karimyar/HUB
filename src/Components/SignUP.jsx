@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { FaFacebookF } from "react-icons/fa6";
 import { FcGoogle } from "react-icons/fc";
-import { Link, useOutletContext } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const inp =
   "w-full p-[15px] border border-[#e0e0e0] rounded-lg text-[0.9rem] outline-none text-[#333] transition placeholder:text-[#aaa] focus:border-[#9c27b0] focus:shadow-[0_0_0_3px_rgba(156,39,176,0.1)]";
@@ -10,8 +10,11 @@ const soc =
 const flink = "transition-colors duration-300 hover:text-[#333]";
 
 export default function SignUP({ onLogin }) {
-  const [user, setUser] = useState("");
+  const [name, setName] = useState("");
+  const [phone, setPhone] = useState("");
+  const [email, setEmail] = useState("");
   const [pass, setPass] = useState("");
+  const [agree, setAgree] = useState(false);
   const [err, setErr] = useState("");
 
   const submit = (e) => {
@@ -19,12 +22,20 @@ export default function SignUP({ onLogin }) {
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-    if (!user.trim()) {
-      setErr("Enter email or phone");
-    } else if (user.includes("@") && !emailRegex.test(user)) {
+    if (!name.trim()) {
+      setErr("Please enter your name");
+    } else if (!email.trim()) {
+      setErr("Please enter your email address");
+    } else if (!emailRegex.test(email.trim())) {
       setErr("Enter a valid email address");
+    } else if (phone.trim() && !/^\+?[\d\s()-]{7,20}$/.test(phone.trim())) {
+      setErr("Enter a valid phone number");
+    } else if (!pass) {
+      setErr("Please enter your password");
     } else if (pass.length < 6) {
       setErr("Password must be at least 6 characters");
+    } else if (!agree) {
+      setErr("Please agree to the Terms of Use and Privacy Policy");
     } else {
       setErr("");
       onLogin();
@@ -52,8 +63,8 @@ export default function SignUP({ onLogin }) {
 
       <div className="w-full flex justify-center -mt-[180px] z-10 pt-[100px] max-[480px]:px-[15px]">
         <div className="bg-white w-full max-w-[400px] rounded-xl shadow-[0_10px_30px_rgba(0,0,0,0.1)] py-10 px-[30px] max-[480px]:py-[30px] max-[480px]:px-5 text-center">
-          <h2 className="text-xl text-[#333] font-semibold mb-[25px]">
-            Sign UP to MyPatientHUB
+          <h2 className="text-2xl text-[#333] font-semibold mb-[25px]">
+            <i> Create your Account</i>
           </h2>
 
           <div className="flex justify-center gap-[15px] mb-[25px]">
@@ -76,9 +87,23 @@ export default function SignUP({ onLogin }) {
           <form className="flex flex-col gap-[15px]" onSubmit={submit}>
             <input
               type="text"
-              value={user}
-              onChange={(e) => setUser(e.target.value)}
-              placeholder="Email or Phone number"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              placeholder="your name "
+              className={inp}
+            />
+            <input
+              type="tel"
+              value={phone}
+              onChange={(e) => setPhone(e.target.value)}
+              placeholder="Phone number(Optional) "
+              className={inp}
+            />
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="Email Address"
               className={inp}
             />
             <input
@@ -91,39 +116,34 @@ export default function SignUP({ onLogin }) {
 
             {err && <p className="text-red-500 text-sm">{err}</p>}
 
+            <div className="flex justify-between items-center text-[0.8rem] text-[#777] mt-[5px] p-5">
+              <label className="flex items-center gap-[5px] cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={agree}
+                  onChange={(e) => setAgree(e.target.checked)}
+                  className="cursor-pointer accent-[#9c27b0]"
+                />
+                <i className="mt-3">
+                  {" "}
+                  I agree to MyPiHUB Terms of Use and Privacy Policy
+                </i>
+              </label>
+            </div>
             <button
               type="submit"
               className="bg-gradient-to-r from-[#42a5f5] to-[#1e88e5] text-white p-[15px] rounded-lg font-bold text-[0.95rem] cursor-pointer w-full tracking-[0.5px] transition hover:opacity-90 hover:scale-[1.02]"
             >
-              SIGN UP
+              CREATE ACCOUNT
             </button>
-
-            <div className="flex justify-between items-center text-[0.8rem] text-[#777] mt-[5px]">
-              <a href="#" className={flink}>
-                Forgot password?
-              </a>
-              <label className="flex items-center gap-[5px] cursor-pointer">
-                <input
-                  type="checkbox"
-                  className="cursor-pointer accent-[#9c27b0]"
-                />
-                Remember me
-              </label>
-            </div>
           </form>
 
-          <div className="flex items-center text-center my-[25px] text-[#aaa] text-[0.8rem] font-medium before:content-[''] before:flex-1 before:border-b before:border-[#e0e0e0] before:mr-[15px] after:content-[''] after:flex-1 after:border-b after:border-[#e0e0e0] after:ml-[15px] ">
-            OR
-          </div>
-          <Link to="/">
-            {/* */}
-            <button
-              type="button"
-              className=" bg-gradient-to-r from-[#e91e63] to-[#9c27b0] text-white p-[15px] rounded-lg font-bold text-[0.95rem] cursor-pointer w-full tracking-[0.5px] transition hover:opacity-90 hover:scale-[1.02]"
-            >
-              SIGN IN
-            </button>
-          </Link>
+          <h1 className=" text-[#777] mt-6">
+            Already have an account?
+            <Link to="/">
+              <span className="text-sm  text-blue-700">SIGN IN</span>
+            </Link>{" "}
+          </h1>
         </div>
       </div>
 
