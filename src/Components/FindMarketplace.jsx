@@ -10,6 +10,7 @@ import {
   FaHeart,
   FaStar,
 } from "react-icons/fa6";
+
 import chicken from "../assets/chicken.jpg";
 import panda from "../assets/panda.jpg";
 import grab from "../assets/grab.jpg";
@@ -21,19 +22,20 @@ import beans from "../assets/beans.jpg";
 import eggsAvocado from "../assets/eggs&avocado.jpg";
 import rice from "../assets/rice.jpg";
 import steak from "../assets/steak.jpg";
+
 export default function FindMarketplace() {
   const { open, setOpen, onLogout } = useOutletContext();
-  // Search for food cards
+
   const [search, setSearch] = useState("");
-  // Favorite foods
   const [favorites, setFavorites] = useState([]);
-  // Entries per page
   const [entries, setEntries] = useState(7);
-  // Search inside table
   const [tableSearch, setTableSearch] = useState("");
-  // --------------------------------------------------
+
+  // NEW: Food details modal and order notification
+  const [selectedFood, setSelectedFood] = useState(null);
+  const [notification, setNotification] = useState("");
+
   // FOOD DATA
-  // --------------------------------------------------
   const foods = [
     {
       id: 243598234,
@@ -144,9 +146,108 @@ export default function FindMarketplace() {
       special: "Low Fat",
     },
   ];
-  // --------------------------------------------------
+
+  // NEW: Estimated nutritional and delivery information
+  const getFoodDetails = (food) => {
+    const details = {
+      "Grilled Fish": {
+        calories: "280–350 kcal",
+        ingredients: "Grilled fish, herbs and light seasoning",
+        benefits:
+          "Provides protein and may provide omega-3 fatty acids, depending on the fish.",
+        suitableFor:
+          "A balanced diet and heart-health-conscious meal choices.",
+        time: 30,
+      },
+      "Healthy Rice & Meat": {
+        calories: "450–600 kcal",
+        ingredients: "Rice, cooked meat and seasoning",
+        benefits:
+          "Provides protein, carbohydrates and energy.",
+        suitableFor:
+          "People looking for an energy-rich, balanced meal.",
+        time: 35,
+      },
+      "Healthy Egg Plate": {
+        calories: "250–350 kcal",
+        ingredients: "Eggs and simple seasonings",
+        benefits:
+          "Eggs provide protein, vitamin B12 and other nutrients.",
+        suitableFor:
+          "A protein-rich breakfast or a balanced meal.",
+        time: 25,
+      },
+      "Beans & Salad": {
+        calories: "250–400 kcal",
+        ingredients: "Beans, fresh vegetables and salad ingredients",
+        benefits:
+          "Beans provide plant protein and fiber, which support digestion.",
+        suitableFor:
+          "People looking for more fiber and plant-based foods.",
+        time: 30,
+      },
+      "Eggs & Avocado": {
+        calories: "300–450 kcal",
+        ingredients: "Eggs, avocado and breakfast ingredients",
+        benefits:
+          "Provides protein, fiber and unsaturated fats.",
+        suitableFor:
+          "A filling breakfast and a balanced eating plan.",
+        time: 25,
+      },
+      Steak: {
+        calories: "400–600 kcal",
+        ingredients: "Cooked steak and seasoning",
+        benefits:
+          "Provides protein, iron and vitamin B12.",
+        suitableFor:
+          "People who need a protein-rich meal, depending on their dietary needs.",
+        time: 40,
+      },
+      "Rice Plate": {
+        calories: "300–450 kcal",
+        ingredients: "Cooked rice and light seasoning",
+        benefits:
+          "Provides carbohydrates that supply energy.",
+        suitableFor:
+          "An energy source as part of a balanced meal.",
+        time: 25,
+      },
+      "Grilled Chicken": {
+        calories: "300–450 kcal",
+        ingredients: "Grilled chicken and seasoning",
+        benefits:
+          "Provides protein that helps maintain and repair body tissues.",
+        suitableFor:
+          "A protein-rich meal as part of a balanced diet.",
+        time: 35,
+      },
+      "Fish & Vegetables": {
+        calories: "250–400 kcal",
+        ingredients: "Fish, vegetables and seasoning",
+        benefits:
+          "Combines protein, vegetables and a range of useful nutrients.",
+        suitableFor:
+          "People looking for a balanced meal with vegetables.",
+        time: 35,
+      },
+    };
+
+    const info = details[food.name] || {
+      calories: "300–450 kcal",
+      ingredients: "Ingredients may vary",
+      benefits: "Can contribute to a varied and balanced diet.",
+      suitableFor: "A balanced eating plan, depending on your needs.",
+      time: 30,
+    };
+
+    return {
+      ...info,
+      deliveryService: food.service,
+    };
+  };
+
   // FAVORITE FUNCTION
-  // --------------------------------------------------
   const toggleFavorite = (id) => {
     setFavorites((currentFavorites) => {
       if (currentFavorites.includes(id)) {
@@ -155,33 +256,48 @@ export default function FindMarketplace() {
       return [...currentFavorites, id];
     });
   };
-  // --------------------------------------------------
+
+  // NEW: Open food details
+  const openFoodDetails = (food) => {
+    setSelectedFood(food);
+    setNotification("");
+  };
+
+  // NEW: Place a demo order
+  const placeOrder = () => {
+    if (!selectedFood) return;
+
+    const food = selectedFood;
+    const details = getFoodDetails(food);
+
+    setSelectedFood(null);
+    setNotification(
+      `Order Confirmed! Your ${food.name} has been ordered successfully. It will arrive in approximately ${details.time} minutes via ${food.service}.`
+    );
+  };
+
   // MAIN SEARCH
-  // --------------------------------------------------
   const filteredFoods = foods.filter((food) =>
     food.name.toLowerCase().includes(search.toLowerCase())
   );
-  // --------------------------------------------------
+
   // TODAY'S PICK
-  // --------------------------------------------------
   const todayPick = foods.find((food) => food.todayPick);
-  // --------------------------------------------------
+
   // NORMAL FOOD CARDS
-  // --------------------------------------------------
   const regularFoods = filteredFoods.filter(
     (food) => !food.todayPick
   );
-  // --------------------------------------------------
+
   // FAVORITE FOOD LIST
-  // --------------------------------------------------
   const favoriteFoods = foods.filter((food) =>
     favorites.includes(food.id)
   );
-  // --------------------------------------------------
+
   // TABLE SEARCH
-  // --------------------------------------------------
   const searchedTable = foods.filter((food) => {
     const value = tableSearch.toLowerCase();
+
     return (
       food.name.toLowerCase().includes(value) ||
       food.category.toLowerCase().includes(value) ||
@@ -189,16 +305,13 @@ export default function FindMarketplace() {
       String(food.price).includes(value)
     );
   });
-  // --------------------------------------------------
+
   // ENTRIES PER PAGE
-  // --------------------------------------------------
   const visibleFoods = searchedTable.slice(0, Number(entries));
   const totalEntries = searchedTable.length;
   const showingFrom = totalEntries === 0 ? 0 : 1;
   const showingTo = Math.min(Number(entries), totalEntries);
-  // --------------------------------------------------
-  // RETURN
-  // --------------------------------------------------
+
   return (
     <>
       <div className="contentTwo font-[Merriweather,serif]">
@@ -208,19 +321,21 @@ export default function FindMarketplace() {
             <FaHouse />
             <p>/ marketplace</p>
           </div>
+
           <div>
             <p>
               <b>marketplace</b>
             </p>
           </div>
+
           <FaBars
             onClick={() => setOpen(!open)}
             className="cursor-pointer"
           />
+
           <div className="search-box relative w-[250px] max-lg:w-[150px] max-[600px]:w-full max-[600px]:order-3">
-            <FaMagnifyingGlass
-              className="absolute left-2.5 top-1/2 -translate-y-1/2 text-[rgb(112,113,115)]"
-            />
+            <FaMagnifyingGlass className="absolute left-2.5 top-1/2 -translate-y-1/2 text-[rgb(112,113,115)]" />
+
             <input
               type="text"
               placeholder="Search..."
@@ -229,10 +344,12 @@ export default function FindMarketplace() {
               className="w-full py-2.5 pr-2.5 pl-[35px] border border-[#ccc] rounded-[10px]"
             />
           </div>
+
           <div className="iconsbox flex items-center gap-2.5 p-2.5 text-[rgb(112,113,115)]">
             <Link to="/account">
               <FaCircleUser />
             </Link>
+
             <button
               className="border-none bg-[rgba(233,231,231,0.336)]"
               onClick={() => {
@@ -242,10 +359,12 @@ export default function FindMarketplace() {
             >
               log out
             </button>
+
             <FaGear />
             <FaBell />
           </div>
         </header>
+
         {/* MAIN */}
         <main className="px-5 pb-10">
           {/* TITLE */}
@@ -254,7 +373,8 @@ export default function FindMarketplace() {
               Search marketplaces and order what you need
             </h2>
           </div>
-          {/* TODAY'S PICK - HORIZONTAL CARD */}
+
+          {/* TODAY'S PICK */}
           {todayPick && (
             <div className="mb-10">
               <div className="flex items-center gap-2 mb-4">
@@ -263,16 +383,8 @@ export default function FindMarketplace() {
                   Today's Pick
                 </h2>
               </div>
-              <div
-                className="
-                  group relative flex flex-row items-center gap-6
-                  max-sm:gap-3 max-sm:items-start p-5 max-sm:p-3
-                  w-full rounded-[18px] overflow-hidden bg-white
-                  border border-[#d946ef] shadow-md transition-all
-                  duration-300 hover:-translate-y-1 hover:shadow-xl
-                "
-              >
-                {/* FOOD IMAGE */}
+
+              <div className="group relative flex flex-row items-center gap-6 max-sm:gap-3 max-sm:items-start p-5 max-sm:p-3 w-full rounded-[18px] overflow-hidden bg-white border border-[#d946ef] shadow-md transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
                 <div className="w-[40%] max-sm:w-[42%] shrink-0 overflow-hidden rounded-[12px]">
                   <img
                     src={todayPick.image}
@@ -280,16 +392,17 @@ export default function FindMarketplace() {
                     className="w-full h-[240px] max-sm:h-[160px] object-cover transition-transform duration-500 group-hover:scale-105"
                   />
                 </div>
-                {/* FOOD INFORMATION */}
+
                 <div className="flex-1 min-w-0 py-2">
                   <span className="inline-flex items-center gap-1 bg-[#fff4bd] text-[#806500] px-3 py-1 rounded-full text-xs font-bold">
                     <FaStar />
                     TODAY'S PICK
                   </span>
+
                   <h3 className="text-[23px] max-sm:text-base font-extrabold text-[#263b80] mt-4">
                     {todayPick.name}
                   </h3>
-                  {/* SERVICE */}
+
                   <div className="flex items-center gap-2 mt-3">
                     <img
                       src={todayPick.serviceImage}
@@ -300,21 +413,30 @@ export default function FindMarketplace() {
                       {todayPick.service}
                     </span>
                   </div>
-                  {/* DISCOUNT + SPECIAL */}
+
                   <div className="flex flex-wrap gap-2 mt-4">
                     <span className="text-xs bg-[#fff1f8] text-[#d946ef] px-3 py-1.5 rounded-full font-bold">
                       {todayPick.discount}% OFF
                     </span>
+
                     <span className="text-xs bg-[#f3f4f6] px-3 py-1.5 rounded-full text-gray-600 font-semibold">
                       {todayPick.special}
                     </span>
                   </div>
-                  {/* PRICE */}
+
                   <p className="mt-4 font-extrabold text-[#16a6c9] text-xl">
                     {todayPick.price} RM
                   </p>
+
+                  {/* NEW: BUY NOW FOR TODAY'S PICK */}
+                  <button
+                    onClick={() => openFoodDetails(todayPick)}
+                    className="mt-3 px-6 py-2.5 rounded-[8px] bg-gradient-to-r from-[#d946ef] to-[#7c3aed] text-white font-bold text-sm transition-all duration-300 hover:scale-[1.02]"
+                  >
+                    BUY NOW
+                  </button>
                 </div>
-                {/* FAVORITE HEART */}
+
                 <button
                   onClick={() => toggleFavorite(todayPick.id)}
                   aria-label="Add to favorites"
@@ -331,29 +453,31 @@ export default function FindMarketplace() {
               </div>
             </div>
           )}
+
           {/* NORMAL FOOD SECTION */}
           <div className="mb-5">
             <h2 className="text-[20px] font-extrabold text-[#263b80]">
               Other Marketplace Foods
             </h2>
           </div>
+
           {/* NORMAL FOOD CARDS */}
           <div className="grid grid-cols-4 max-xl:grid-cols-2 max-sm:grid-cols-1 gap-6">
             {regularFoods.map((food) => {
               const isFavorite = favorites.includes(food.id);
+
               return (
                 <div
                   key={food.id}
                   className="group relative rounded-[15px] overflow-hidden bg-white border border-[#eeeeee] transition-all duration-300 hover:-translate-y-2 hover:shadow-xl"
                 >
-                  {/* FOOD IMAGE */}
                   <div className="relative overflow-hidden">
                     <img
                       src={food.image}
                       alt={food.name}
                       className="w-full h-[145px] object-cover transition-transform duration-500 group-hover:scale-105"
                     />
-                    {/* FAVORITE */}
+
                     <button
                       onClick={() => toggleFavorite(food.id)}
                       aria-label={
@@ -372,36 +496,39 @@ export default function FindMarketplace() {
                       />
                     </button>
                   </div>
-                  {/* CARD CONTENT */}
+
                   <div className="p-4">
-                    {/* FOOD NAME + PRICE */}
                     <div className="flex justify-between items-center gap-2">
                       <h3 className="font-bold text-[#263b80]">
                         {food.name}
                       </h3>
+
                       <span className="font-bold text-[#16a6c9]">
                         {food.price} RM
                       </span>
                     </div>
-                    {/* SERVICE */}
+
                     <div className="flex items-center gap-2 mt-3">
                       <img
                         src={food.serviceImage}
                         alt={food.service}
                         className="w-[38px] h-[28px] object-contain"
                       />
+
                       <span className="font-semibold text-[#263b80]">
                         {food.service}
                       </span>
                     </div>
-                    {/* SPECIAL */}
+
                     <div className="flex flex-wrap gap-2 mt-3">
                       <span className="text-xs bg-[#f3f4f6] px-2.5 py-1 rounded-full text-gray-600">
                         {food.special}
                       </span>
                     </div>
-                    {/* BUY BUTTON */}
+
+                    {/* UPDATED: OPEN DETAILS INSTEAD OF BUYING DIRECTLY */}
                     <button
+                      onClick={() => openFoodDetails(food)}
                       className="mt-4 w-full py-2.5 rounded-[8px] bg-gradient-to-r from-[#d946ef] to-[#7c3aed] text-white font-bold text-sm transition-all duration-300 hover:scale-[1.02]"
                     >
                       BUY NOW
@@ -410,13 +537,15 @@ export default function FindMarketplace() {
                 </div>
               );
             })}
+
             {regularFoods.length === 0 && (
               <p className="col-span-full text-center py-8 text-gray-500">
                 No food found.
               </p>
             )}
           </div>
-          {/* FIND YOUR FAVORITE FOOD */}
+
+          {/* FAVORITES SUMMARY */}
           <div className="mt-10 mb-8 p-5 rounded-[15px] bg-[#faf7ff] border border-[#eadcff] flex items-center justify-between max-sm:flex-col max-sm:items-start gap-4">
             <div>
               <h2 className="text-[20px] font-extrabold text-[#263b80]">
@@ -426,6 +555,7 @@ export default function FindMarketplace() {
                 Save the meals you love and find them easily.
               </p>
             </div>
+
             <div className="flex items-center gap-3 bg-white px-5 py-3 rounded-full shadow-sm">
               <FaHeart className="text-red-500" />
               <span className="font-bold text-[#263b80]">
@@ -436,12 +566,14 @@ export default function FindMarketplace() {
               </span>
             </div>
           </div>
+
           {/* FAVORITE FOODS LIST */}
           {favorites.length > 0 && (
             <div className="mb-10">
               <h2 className="text-[20px] font-extrabold text-[#263b80] mb-4">
                 Your Favorite Foods
               </h2>
+
               <div className="grid grid-cols-3 max-xl:grid-cols-2 max-sm:grid-cols-1 gap-4">
                 {favoriteFoods.map((food) => (
                   <div
@@ -453,6 +585,7 @@ export default function FindMarketplace() {
                       alt={food.name}
                       className="w-[75px] h-[60px] rounded-[8px] object-cover"
                     />
+
                     <div className="flex-1 min-w-0">
                       <p className="font-bold text-[#263b80]">
                         {food.name}
@@ -461,6 +594,7 @@ export default function FindMarketplace() {
                         {food.price} RM
                       </p>
                     </div>
+
                     <button
                       onClick={() => toggleFavorite(food.id)}
                       aria-label={`Remove ${food.name} from favorites`}
@@ -473,17 +607,19 @@ export default function FindMarketplace() {
               </div>
             </div>
           )}
+
           {favorites.length === 0 && (
             <p className="mb-8 text-sm text-gray-500">
               You haven't added any favorite foods yet. Click a heart on any food card to add it here.
             </p>
           )}
+
           {/* TABLE SECTION */}
           <div className="mt-10">
             <h2 className="text-[20px] font-bold text-[#263b80] mb-5">
               Other results for healthy diet search
             </h2>
-            {/* ENTRIES + SEARCH */}
+
             <div className="flex justify-between items-center gap-5 mb-5 max-md:flex-col max-md:items-start">
               <div className="flex items-center gap-3">
                 <select
@@ -497,12 +633,15 @@ export default function FindMarketplace() {
                   <option value="7">7</option>
                   <option value="8">8</option>
                 </select>
+
                 <span className="text-gray-500 whitespace-nowrap">
                   entries per page
                 </span>
               </div>
+
               <div className="relative w-[220px]">
                 <FaMagnifyingGlass className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+
                 <input
                   type="text"
                   placeholder="Search"
@@ -512,6 +651,7 @@ export default function FindMarketplace() {
                 />
               </div>
             </div>
+
             {/* TABLE */}
             <div className="w-full overflow-x-auto rounded-[10px]">
               <div className="min-w-[950px]">
@@ -523,6 +663,7 @@ export default function FindMarketplace() {
                   <span>PRICE</span>
                   <span>ID</span>
                 </div>
+
                 {visibleFoods.map((food) => (
                   <div
                     key={food.id}
@@ -534,23 +675,28 @@ export default function FindMarketplace() {
                         alt={food.name}
                         className="w-[58px] h-[42px] rounded-[5px] object-cover"
                       />
+
                       <span className="font-semibold text-[#263b80]">
                         {food.name}
                       </span>
                     </div>
+
                     <span className="text-gray-600">
                       {food.category}
                     </span>
+
                     <div className="flex items-center gap-3">
                       <img
                         src={food.serviceImage}
                         alt={food.service}
                         className="w-[58px] h-[32px] object-contain"
                       />
+
                       <span className="text-[#263b80] font-semibold">
                         {food.service}
                       </span>
                     </div>
+
                     <span>
                       {food.todayPick ? (
                         <span className="font-bold text-[#d946ef]">
@@ -560,14 +706,17 @@ export default function FindMarketplace() {
                         <span className="text-gray-500">0</span>
                       )}
                     </span>
+
                     <span className="text-gray-600">
                       {food.price} RM
                     </span>
+
                     <span className="text-gray-500">
                       {food.id}
                     </span>
                   </div>
                 ))}
+
                 {visibleFoods.length === 0 && (
                   <div className="text-center py-10 text-gray-500">
                     No food found.
@@ -575,17 +724,207 @@ export default function FindMarketplace() {
                 )}
               </div>
             </div>
-            {/* SHOWING */}
+
             <div className="mt-5 text-sm text-gray-500">
               Showing {showingFrom} to {showingTo} of {totalEntries} entries
             </div>
           </div>
         </main>
+
+        {/* NEW: FOOD DETAILS MODAL */}
+        {selectedFood && (
+          <div
+            className="fixed inset-0 z-[100] flex items-center justify-center bg-black/60 p-4"
+            onClick={() => setSelectedFood(null)}
+          >
+            <div
+              role="dialog"
+              aria-modal="true"
+              aria-label={`${selectedFood.name} details`}
+              className="relative w-full max-w-[650px] max-h-[90vh] overflow-y-auto rounded-[20px] bg-white shadow-2xl"
+              onClick={(e) => e.stopPropagation()}
+            >
+              {/* MODAL HEADER IMAGE */}
+              <div className="relative">
+                <img
+                  src={selectedFood.image}
+                  alt={selectedFood.name}
+                  className="w-full h-[230px] object-cover"
+                />
+
+                <button
+                  onClick={() => setSelectedFood(null)}
+                  aria-label="Close food details"
+                  className="absolute top-3 right-3 w-10 h-10 rounded-full bg-white text-[#263b80] text-2xl shadow-md hover:bg-gray-100"
+                >
+                  ×
+                </button>
+
+                {selectedFood.todayPick && (
+                  <span className="absolute left-4 top-4 flex items-center gap-1 rounded-full bg-[#fff4bd] px-3 py-2 text-xs font-bold text-[#806500]">
+                    <FaStar />
+                    TODAY'S PICK
+                  </span>
+                )}
+              </div>
+
+              {/* MODAL FOOD DETAILS */}
+              <div className="p-6 max-sm:p-4">
+                <div className="flex items-start justify-between gap-3">
+                  <div>
+                    <h2 className="text-2xl max-sm:text-xl font-extrabold text-[#263b80]">
+                      {selectedFood.name}
+                    </h2>
+
+                    <p className="mt-2 text-sm text-gray-500">
+                      {selectedFood.special}
+                    </p>
+                  </div>
+
+                  <p className="shrink-0 text-xl font-extrabold text-[#16a6c9]">
+                    {selectedFood.price} RM
+                  </p>
+                </div>
+
+                <div className="mt-5 grid grid-cols-2 max-sm:grid-cols-1 gap-3">
+                  {/* CALORIES */}
+                  <div className="rounded-xl bg-[#faf7ff] border border-[#eadcff] p-4">
+                    <p className="text-sm text-gray-500">
+                      Calories (estimated)
+                    </p>
+                    <p className="mt-1 font-bold text-[#263b80]">
+                      {getFoodDetails(selectedFood).calories}
+                    </p>
+                  </div>
+
+                  {/* DELIVERY TIME */}
+                  <div className="rounded-xl bg-[#effcff] border border-[#c9f0f7] p-4">
+                    <p className="text-sm text-gray-500">
+                      Estimated Delivery
+                    </p>
+                    <p className="mt-1 font-bold text-[#087f9b]">
+                      {getFoodDetails(selectedFood).time} minutes
+                    </p>
+                  </div>
+                </div>
+
+                {/* INGREDIENTS */}
+                <div className="mt-5">
+                  <h3 className="font-bold text-[#263b80]">
+                    Ingredients
+                  </h3>
+                  <p className="mt-2 text-sm leading-6 text-gray-600">
+                    {getFoodDetails(selectedFood).ingredients}
+                  </p>
+                </div>
+
+                {/* HEALTH BENEFITS */}
+                <div className="mt-5">
+                  <h3 className="font-bold text-[#263b80]">
+                    Nutritional Benefits
+                  </h3>
+                  <p className="mt-2 text-sm leading-6 text-gray-600">
+                    {getFoodDetails(selectedFood).benefits}
+                  </p>
+                </div>
+
+                {/* HEALTH SUITABILITY */}
+                <div className="mt-5 rounded-xl bg-[#f0faf4] border border-[#d4f0de] p-4">
+                  <h3 className="font-bold text-[#247547]">
+                    Health & Diet Information
+                  </h3>
+
+                  <p className="mt-2 text-sm leading-6 text-gray-600">
+                    {getFoodDetails(selectedFood).suitableFor}
+                  </p>
+
+                  <p className="mt-2 text-xs leading-5 text-gray-500">
+                    This is general nutritional information, not medical
+                    advice. No food is guaranteed to treat or cure a disease.
+                    Actual nutrition varies with portion size and preparation.
+                  </p>
+                </div>
+
+                {/* DELIVERY COMPANY */}
+                <div className="mt-5 rounded-xl border border-gray-200 p-4">
+                  <h3 className="font-bold text-[#263b80]">
+                    Delivery Information
+                  </h3>
+
+                  <div className="mt-3 flex items-center gap-3">
+                    <img
+                      src={selectedFood.serviceImage}
+                      alt={selectedFood.service}
+                      className="w-[65px] h-[45px] object-contain"
+                    />
+
+                    <div>
+                      <p className="font-bold text-[#263b80]">
+                        {selectedFood.service}
+                      </p>
+                      <p className="text-sm text-gray-500">
+                        Estimated arrival in{" "}
+                        {getFoodDetails(selectedFood).time} minutes
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* FINAL BUY BUTTON */}
+                <button
+                  onClick={placeOrder}
+                  className="mt-6 w-full rounded-xl bg-gradient-to-r from-[#d946ef] to-[#7c3aed] py-3.5 text-white font-extrabold shadow-md transition-all duration-300 hover:scale-[1.01] hover:shadow-lg"
+                >
+                  BUY · {selectedFood.price} RM
+                </button>
+
+                <p className="mt-3 text-center text-xs text-gray-400">
+                  Demo checkout — no real payment will be processed.
+                </p>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* NEW: ORDER CONFIRMATION NOTIFICATION */}
+        {notification && (
+          <div
+            role="status"
+            aria-live="polite"
+            className="fixed top-5 right-5 z-[120] w-[calc(100%-40px)] max-w-[420px] rounded-2xl border border-[#bde8ce] bg-white p-5 shadow-2xl"
+          >
+            <div className="flex items-start gap-3">
+              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#dcfce7] text-xl text-[#15803d]">
+                ✓
+              </div>
+
+              <div className="flex-1">
+                <h3 className="font-extrabold text-[#247547]">
+                  Order Confirmed!
+                </h3>
+
+                <p className="mt-2 text-sm leading-6 text-gray-600">
+                  {notification}
+                </p>
+              </div>
+
+              <button
+                onClick={() => setNotification("")}
+                aria-label="Dismiss notification"
+                className="text-xl text-gray-400 hover:text-gray-700"
+              >
+                ×
+              </button>
+            </div>
+          </div>
+        )}
+
         {/* FOOTER */}
         <footer className="mt-10 px-8 py-6 border-t border-gray-200 flex justify-between items-center gap-5 max-md:flex-col max-md:items-start text-sm text-gray-500">
           <p>
             ©️ 2026, made with ♡ by MyPtiHUB for a better web.
           </p>
+
           <div className="flex gap-6">
             <a href="#" className="hover:text-[#263b80]">
               MyPatientHUB
