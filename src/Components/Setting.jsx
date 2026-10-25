@@ -410,6 +410,7 @@ export default function Settings() {
                 </ul>
                 <button
                   type="button"
+                  onClick={() => alert("your PASSWORD has been UPDATE ")}
                   className="mt-6 rounded-md bg-gradient-to-r from-[#353C66] to-[#20243D] px-6 py-2 text-white transition-all duration-300 hover:scale-105 hover:shadow-lg"
                 >
                   UPDATE PASSWORD
@@ -434,25 +435,13 @@ export default function Settings() {
                   <p className="text-[#64748b]">Security keys</p>
                   <div className="flex items-center gap-3">
                     <p className="text-[#64748b]">No Security keys</p>
-                    <button
-                      type="button"
-                      className="rounded border px-3 py-2 transition-all hover:scale-105"
-                    >
-                      ADD
-                    </button>
                   </div>
                 </div>
                 <hr className="mx-7 my-7 text-gray-200" />
                 <div className="mt-7 flex items-center justify-between gap-3">
                   <p className="text-[#64748b]">SMS number</p>
                   <div className="flex items-center gap-3">
-                    <p className="text-[#64748b]">+3012374423</p>
-                    <button
-                      type="button"
-                      className="rounded border px-3 py-2 transition-all hover:scale-105"
-                    >
-                      EDIT
-                    </button>
+                    <p className="text-[#64748b]">+9312374423</p>
                   </div>
                 </div>
                 <hr className="mx-7 my-7 text-gray-200" />
@@ -460,12 +449,6 @@ export default function Settings() {
                   <p className="text-[#64748b]">Authenticator app</p>
                   <div className="flex items-center gap-3">
                     <p className="text-[#64748b]">Not Configured</p>
-                    <button
-                      type="button"
-                      className="rounded border px-5 py-3 transition-all hover:scale-105"
-                    >
-                      SET UP
-                    </button>
                   </div>
                 </div>
                 <hr className="mx-7 my-7 text-gray-200" />
@@ -486,12 +469,15 @@ export default function Settings() {
                 <ul className="list-disc pl-6 space-y-1 text-[#64748b] p-6">
                   <li>One special characters</li>
                   <li>Min 6 characters</li>
-                  <li>One number (2 are recommended)</li>
+                  <li> One number (2 are recommended)</li>
                   <li>Change it often</li>
                 </ul>
               </div>
               <div>
-                <button className="mt-6 rounded-md px-6 py-2 text-white bg-gradient-to-r from-[#353C66] to-[#20243D]  text-end">
+                <button
+                  onClick={() => alert("the PASSWORD has been UPDEAT. ")}
+                  className="mt-6 rounded-md px-6 py-2 text-white bg-gradient-to-r from-[#353C66] to-[#20243D]  text-end"
+                >
                   UPDEAT PASSWORD
                 </button>
               </div>
