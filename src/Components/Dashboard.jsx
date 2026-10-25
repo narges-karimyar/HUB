@@ -16,6 +16,9 @@ import product from "../Data/Products";
 import CircleChart from "./CircleChart";
 import SecondCircle from "./SecondCircle";
 import LineBarAreaChart from "./LineBarAreaChart";
+import docter from "../assets/docter.jpg";
+import kidsdocter from "../assets/kidsdocter.jpg";
+import femaledocter from "../assets/femaledocter.jpg";
 
 export default function Dashboard() {
   const { open, setOpen, onLogout } = useOutletContext();
@@ -35,6 +38,8 @@ export default function Dashboard() {
     { id: "cardpro4", name: "Health Index" },
     { id: "cardpro5", name: "Choronic wellness" },
     { id: "cardpro6", name: "Appointment" },
+    { id: "cardpro7", name: "Map Location" },
+    { id: "cardpro8", name: "Previous Appointments" },
   ];
 
   const items = products.filter((product) =>
@@ -436,7 +441,7 @@ export default function Dashboard() {
           )}
 
           {/* Map Section */}
-          {products[5].name.toLowerCase().includes(search.toLowerCase()) && (
+          {products[6].name.toLowerCase().includes(search.toLowerCase()) && (
             <div
               id="cardpro7"
               className="bg-white p-[30px] max-[600px]:p-[15px] rounded-xl h-[400px] w-full overflow-hidden"
@@ -514,7 +519,7 @@ export default function Dashboard() {
             </div>
           )}
 
-          {products[5].name.toLowerCase().includes(search.toLowerCase()) && (
+          {products[7].name.toLowerCase().includes(search.toLowerCase()) && (
             <div className="w-full rounded-[28px] bg-white p-6 sm:p-8 shadow-sm">
               <h2 className="mb-8 text-xl font-semibold text-[#354968]">
                 Previous Appointments
@@ -524,14 +529,14 @@ export default function Dashboard() {
                 {/* Appointment 1 */}
                 <div className="flex items-center gap-3 sm:gap-4">
                   <img
-                    src={product[19].Image}
+                    src={docter}
                     alt="Dr. Mustafa"
                     className="h-12 w-12 shrink-0 rounded-full object-cover shadow-md sm:h-16 sm:w-16"
                   />
 
                   <div className="min-w-0 flex-1">
                     <p className="text-base font-semibold text-[#354968] sm:text-xl">
-                      Dr.Mustafa
+                      Dr. Mustafa
                     </p>
                     <p className="mt-1 text-sm font-semibold text-[#71809d] sm:text-lg">
                       Emergency
@@ -550,17 +555,17 @@ export default function Dashboard() {
                 {/* Appointment 2 */}
                 <div className="flex items-center gap-3 sm:gap-4">
                   <img
-                    src={product[20].Image}
-                    alt="Dr. Khirullah"
+                    src={kidsdocter}
+                    alt="Dr. Sara"
                     className="h-12 w-12 shrink-0 rounded-full object-cover shadow-md sm:h-16 sm:w-16"
                   />
 
                   <div className="min-w-0 flex-1">
                     <p className="text-base font-semibold text-[#354968] sm:text-xl">
-                      DR. sara
+                      Dr. Sara
                     </p>
                     <p className="mt-1 text-sm font-semibold text-[#71809d] sm:text-lg">
-                      consultation
+                      kids docter
                     </p>
                   </div>
 
@@ -576,17 +581,17 @@ export default function Dashboard() {
                 {/* Appointment 3 */}
                 <div className="flex items-center gap-3 sm:gap-4">
                   <img
-                    src={product[20].Image}
-                    alt="Dr. Bilal"
+                    src={femaledocter}
+                    alt="Dr. Maryam"
                     className="h-12 w-12 shrink-0 rounded-full object-cover shadow-md sm:h-16 sm:w-16"
                   />
 
                   <div className="min-w-0 flex-1">
                     <p className="text-base font-semibold text-[#354968] sm:text-xl">
-                      DR. maryam
+                      Dr. Maryam
                     </p>
                     <p className="mt-1 text-sm font-semibold text-[#71809d] sm:text-lg">
-                      consultation
+                      Consultation
                     </p>
                   </div>
 

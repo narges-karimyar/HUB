@@ -23,54 +23,83 @@ export default function FindClinic() {
   const [view, setView] = useState("map");
   const [sort, setSort] = useState("next");
 
-  // Kabul is the default map location
-  const [zipCode, setZipCode] = useState("Kabul, Afghanistan");
+  const [zipCode, setZipCode] = useState("");
   const [doctorSearch, setDoctorSearch] = useState("");
   const [locationQuery, setLocationQuery] = useState("Kabul, Afghanistan");
 
   const [error, setError] = useState("");
   const [loadingLocation, setLoadingLocation] = useState(false);
 
-  // Sidebar filters
   const [sidebarSearch, setSidebarSearch] = useState("");
   const [sidebarZip, setSidebarZip] = useState("");
 
-  // Search Kabul or a neighborhood
-  const handleSearch = () => {
-    const query = zipCode.trim();
+  // Search by clinic name OR Afghan postal code.
+  const findPlaceOnMap = async (query, isPostalCode = false) => {
+    const value = query.trim();
 
-    if (!query) {
-      setError("Enter Kabul or a neighborhood.");
+    if (!value) {
+      setError(
+        isPostalCode
+          ? "Please enter a postal code."
+          : "Please enter a clinic name.",
+      );
       return;
     }
 
-    // Numeric postal codes are searched within Kabul
-    const searchLocation = /^\d+$/.test(query)
-      ? `${query}, Kabul, Afghanistan`
-      : query.toLowerCase().includes("afghanistan")
-        ? query
-        : `${query}, Kabul, Afghanistan`;
-
-    setLocationQuery(searchLocation);
-    setError("");
-    setView("map");
-  };
-
-  // Search by clinic name or specialty
-  const handleDoctorSearch = () => {
-    const query = doctorSearch.trim();
-
-    if (!query) {
-      setError("Enter a clinic name or specialty.");
+    if (isPostalCode && !/^\d{4}(\d{2})?$/.test(value)) {
+      setError("Enter a 4-digit or 6-digit Afghan postal code.");
       return;
     }
 
-    setLocationQuery(`${query}, Kabul, Afghanistan`);
     setError("");
-    setView("map");
+    setLoadingLocation(true);
+
+    try {
+      const params = new URLSearchParams({
+        format: "jsonv2",
+        limit: "5",
+        countrycodes: "af",
+      });
+
+      if (isPostalCode) {
+        params.set("postalcode", value);
+        params.set("country", "Afghanistan");
+      } else {
+        params.set("q", `${value}, Afghanistan`);
+      }
+
+      const response = await fetch(
+        `https://nominatim.openstreetmap.org/search?${params.toString()}`,
+      );
+
+      if (!response.ok) {
+        throw new Error("Search service unavailable.");
+      }
+
+      const results = await response.json();
+
+      if (!results.length) {
+        setError(
+          isPostalCode
+            ? "Postal code not found. It may not be available in the map database."
+            : "Clinic not found. Check the spelling or try another name.",
+        );
+        return;
+      }
+
+      const place = results[0];
+
+      // Update the Google Map to the matched coordinates.
+      setLocationQuery(`${place.lat},${place.lon}`);
+      setView("map");
+    } catch (err) {
+      setError("Search failed. Check your internet connection and try again.");
+    } finally {
+      setLoadingLocation(false);
+    }
   };
 
-  // Use the browser's current location
+  // Use the browser's current location.
   const handleCurrentLocation = () => {
     if (!navigator.geolocation) {
       setError("Your browser does not support location services.");
@@ -85,12 +114,11 @@ export default function FindClinic() {
         const { latitude, longitude } = position.coords;
 
         setLocationQuery(`${latitude},${longitude}`);
-        setZipCode(`${latitude}, ${longitude}`);
         setView("map");
         setLoadingLocation(false);
       },
       () => {
-        setError("Unable to get your location. Please allow location access.");
+        setError("Location access failed. Please allow location access.");
         setLoadingLocation(false);
       },
       {
@@ -101,54 +129,34 @@ export default function FindClinic() {
     );
   };
 
-  // Sidebar search
-  const handleSidebarSearch = () => {
-    const query = sidebarZip.trim() || sidebarSearch.trim();
-
-    if (!query) {
-      setError("Enter a clinic type or neighborhood.");
-      return;
-    }
-
-    const searchLocation = /^\d+$/.test(query)
-      ? `${query}, Kabul, Afghanistan`
-      : query.toLowerCase().includes("afghanistan")
-        ? query
-        : `${query}, Kabul, Afghanistan`;
-
-    setLocationQuery(searchLocation);
-    setError("");
-    setView("map");
-  };
-
-  const clinicOne = product?.[16];
-  const clinicTwo = product?.[17];
+  const firstcilinc = product?.[16];
+  const secondclinic = product?.[17];
 
   const clinics = [
     {
-      name: "Klinik Pakar Kesihatan USIM",
-      address: "Bandar Baru Nilai, 71800 Nilai, Negeri Sembilan, Malaysia",
-      city: "Nilai, Negeri Sembilan, Malaysia",
-      rating: "4.8",
-      reviews: "120",
-      image: clinicOne?.Image,
-      mapQuery: "Klinik Pakar Kesihatan USIM",
+      name: "French Medical Institute for Mothers and Children (FMIC)",
+      address: "Aliabad, behind Kabul Medical University",
+      city: "Kabul, Afghanistan",
+      rating: "—",
+      reviews: "Not provided",
+      image: firstcilinc?.Image,
+      mapQuery:
+        "French Medical Institute for Mothers and Children, Kabul, Afghanistan",
     },
     {
-      name: "Dialysis Centers",
-      address:
-        "Lot 193–194, Jalan Nilai Square 6, Bandar Baru Nilai, Negeri Sembilan, Malaysia",
-      city: "Nilai, Negeri Sembilan, Malaysia",
-      rating: "4.6",
-      reviews: "98",
-      image: clinicTwo?.Image,
-      mapQuery: "Dialysis Centers Nilai",
+      name: "Ariana Medical Complex",
+      address: "Red Crescent, 5th Phase, Kabul",
+      city: "Kabul, Afghanistan",
+      rating: "—",
+      reviews: "Not provided",
+      image: secondclinic?.Image,
+      mapQuery: "Ariana Medical Complex, Kabul, Afghanistan",
     },
   ];
 
   return (
     <>
-      {/* Header and Search Hero */}
+      {/* Header */}
       <div className="background min-h-100 text-white">
         <header className="flex flex-wrap items-center justify-between gap-4 p-4 md:p-5">
           <div className="flex items-center gap-2">
@@ -168,19 +176,19 @@ export default function FindClinic() {
             <FaBars />
           </button>
 
-          {/* Header Search */}
+          {/* Header clinic-name search */}
           <form
             className="relative order-3 w-full sm:w-[250px] md:order-none md:w-[200px] lg:w-[250px]"
             onSubmit={(e) => {
               e.preventDefault();
-              handleDoctorSearch();
+              findPlaceOnMap(doctorSearch, false);
             }}
           >
             <FaMagnifyingGlass className="absolute left-3 top-1/2 -translate-y-1/2 text-[#707173]" />
 
             <input
               type="text"
-              placeholder="Search clinics..."
+              placeholder="Search clinic names..."
               value={doctorSearch}
               onChange={(e) => setDoctorSearch(e.target.value)}
               className="w-full rounded-[10px] border border-[#ccc] bg-white py-2.5 pl-[35px] pr-2.5 text-black outline-none"
@@ -212,65 +220,88 @@ export default function FindClinic() {
           </div>
         </header>
 
-        {/* Find Clinic Section */}
+        {/* Main Search Section */}
         <div className="flex flex-col items-center px-4 py-10 text-center md:py-16">
           <h1 className="text-3xl font-bold sm:text-4xl">Find a Clinic</h1>
 
           <p className="mt-3 text-lg sm:text-2xl">
-            Search clinics and schedule an appointment with doctors through
-            clinics.
+            Search for clinics or find places using a postal code.
           </p>
 
-          {/* Main Search Form */}
-          <form
-            className="mt-6 flex w-full max-w-4xl flex-col items-center justify-center gap-3 sm:flex-row sm:flex-wrap"
-            onSubmit={(e) => {
-              e.preventDefault();
-              handleSearch();
-            }}
-          >
-            <input
-              type="text"
-              placeholder="Clinic name or specialty"
-              value={doctorSearch}
-              onChange={(e) => setDoctorSearch(e.target.value)}
-              className="w-full rounded bg-white px-4 py-2 text-black outline-none sm:w-[280px]"
-            />
+          <div className="mt-6 flex w-full max-w-4xl flex-col items-center justify-center gap-3 sm:flex-row sm:flex-wrap">
+            {/* Clinic-name search */}
+            <form
+              className="flex w-full gap-2 sm:w-auto"
+              onSubmit={(e) => {
+                e.preventDefault();
+                findPlaceOnMap(doctorSearch, false);
+              }}
+            >
+              <input
+                type="text"
+                placeholder="Clinic name"
+                value={doctorSearch}
+                onChange={(e) => setDoctorSearch(e.target.value)}
+                className="min-w-0 flex-1 rounded bg-white px-4 py-2 text-black outline-none sm:w-[220px]"
+              />
 
-            <input
-              type="text"
-              placeholder="Kabul or neighborhood"
-              value={zipCode}
-              onChange={(e) => setZipCode(e.target.value)}
-              className="w-full rounded bg-white px-4 py-2 text-black outline-none sm:w-[220px]"
-            />
+              <button
+                type="submit"
+                disabled={loadingLocation}
+                className="rounded-2xl bg-blue-500 px-4 py-2 text-black hover:bg-blue-600 disabled:opacity-60"
+              >
+                Find Clinic
+              </button>
+            </form>
 
+            {/* Postal-code search */}
+            <form
+              className="flex w-full gap-2 sm:w-auto"
+              onSubmit={(e) => {
+                e.preventDefault();
+                findPlaceOnMap(zipCode, true);
+              }}
+            >
+              <input
+                type="text"
+                inputMode="numeric"
+                maxLength={6}
+                placeholder="Afghan postal code"
+                value={zipCode}
+                onChange={(e) =>
+                  setZipCode(e.target.value.replace(/\D/g, "").slice(0, 6))
+                }
+                className="min-w-0 flex-1 rounded bg-white px-4 py-2 text-black outline-none sm:w-[190px]"
+              />
+
+              <button
+                type="submit"
+                disabled={loadingLocation}
+                className="rounded-2xl bg-blue-500 px-4 py-2 text-black hover:bg-blue-600 disabled:opacity-60"
+              >
+                Find Code
+              </button>
+            </form>
+
+            {/* Current location */}
             <button
               type="button"
               onClick={handleCurrentLocation}
               disabled={loadingLocation}
               className="w-full rounded-2xl bg-blue-500 px-5 py-2 text-black hover:bg-blue-600 disabled:opacity-60 sm:w-auto"
             >
-              {loadingLocation ? "LOCATING..." : "CURRENT"}
+              {loadingLocation ? "SEARCHING..." : "CURRENT LOCATION"}
             </button>
-
-            <button
-              type="submit"
-              className="w-full rounded-2xl bg-blue-500 px-5 py-2 text-black hover:bg-blue-600 sm:w-auto"
-            >
-              SEARCH
-            </button>
-          </form>
+          </div>
 
           {error && (
-            <p className="mt-3 max-w-xl text-sm text-red-200">{error}</p>
+            <p className="mt-3 max-w-xl text-sm text-red-500">{error}</p>
           )}
         </div>
       </div>
 
       {/* Map and List */}
       <div className="parttwo map-page mt-5 px-4 sm:px-6">
-        {/* View Tabs */}
         <div className="mb-4 flex flex-wrap gap-2.5">
           <button
             className={`flex items-center gap-2 rounded-lg px-4 py-2 ${
@@ -298,33 +329,59 @@ export default function FindClinic() {
         </div>
 
         <div className="flex min-w-0 flex-col gap-5 lg:flex-row">
-          {/* Sidebar Filters */}
+          {/* Sidebar */}
           <aside className="flex w-full shrink-0 flex-col gap-3 rounded-xl bg-white p-5 lg:w-[260px]">
-            <input
-              type="text"
-              placeholder="Clinic type (e.g. Primary Care)"
-              value={sidebarSearch}
-              onChange={(e) => setSidebarSearch(e.target.value)}
-              className="w-full rounded-lg border border-[#ddd] px-3 py-2 outline-none focus:border-blue-500"
-            />
-
-            <input
-              type="text"
-              placeholder="Kabul or neighborhood"
-              value={sidebarZip}
-              onChange={(e) => setSidebarZip(e.target.value)}
-              onKeyDown={(e) => {
-                if (e.key === "Enter") handleSidebarSearch();
+            {/* Sidebar clinic-name search */}
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                findPlaceOnMap(sidebarSearch, false);
               }}
-              className="w-full rounded-lg border border-[#ddd] px-3 py-2 outline-none focus:border-blue-500"
-            />
-
-            <button
-              onClick={handleSidebarSearch}
-              className="rounded-lg bg-[#e943c5] px-4 py-2 text-white hover:opacity-90"
+              className="flex flex-col gap-2"
             >
-              Apply Search
-            </button>
+              <input
+                type="text"
+                placeholder="Search clinic name"
+                value={sidebarSearch}
+                onChange={(e) => setSidebarSearch(e.target.value)}
+                className="w-full rounded-lg border border-[#ddd] px-3 py-2 outline-none focus:border-blue-500"
+              />
+
+              <button
+                type="submit"
+                className="rounded-lg bg-[#e943c5] px-4 py-2 text-white hover:opacity-90"
+              >
+                Find Clinic
+              </button>
+            </form>
+
+            {/* Sidebar postal-code search */}
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                findPlaceOnMap(sidebarZip, true);
+              }}
+              className="flex flex-col gap-2"
+            >
+              <input
+                type="text"
+                inputMode="numeric"
+                maxLength={6}
+                placeholder="Afghan postal code"
+                value={sidebarZip}
+                onChange={(e) =>
+                  setSidebarZip(e.target.value.replace(/\D/g, "").slice(0, 6))
+                }
+                className="w-full rounded-lg border border-[#ddd] px-3 py-2 outline-none focus:border-blue-500"
+              />
+
+              <button
+                type="submit"
+                className="rounded-lg bg-[#e943c5] px-4 py-2 text-white hover:opacity-90"
+              >
+                Find Postal Code
+              </button>
+            </form>
 
             <h4 className="mt-2 font-bold">Filter By</h4>
 
@@ -398,9 +455,8 @@ export default function FindClinic() {
             </label>
           </aside>
 
-          {/* Map / List Results */}
+          {/* Results */}
           <div className="min-w-0 flex-1">
-            {/* Sort Controls */}
             <div className="mb-4 flex flex-wrap items-center gap-3">
               <span className="font-medium">Sort By</span>
 
@@ -427,16 +483,18 @@ export default function FindClinic() {
               </button>
             </div>
 
-            {/* Map View */}
+            {/* Map */}
             {view === "map" && (
               <div className="relative h-[350px] overflow-hidden rounded-xl sm:h-[500px]">
                 <iframe
+                  key={locationQuery}
                   title={`Map of ${locationQuery}`}
                   className="h-full w-full border-0"
-                  src={`https://www.google.com/maps?q=${encodeURIComponent(
+                  src={`https://maps.google.com/maps?q=${encodeURIComponent(
                     locationQuery,
-                  )}&output=embed`}
+                  )}&z=14&output=embed`}
                   loading="lazy"
+                  allowFullScreen
                   referrerPolicy="no-referrer-when-downgrade"
                 />
 
@@ -454,7 +512,7 @@ export default function FindClinic() {
               </div>
             )}
 
-            {/* List View */}
+            {/* Clinic List */}
             {view === "list" && (
               <div className="flex flex-col gap-4">
                 {clinics.map((clinic) => (
@@ -500,15 +558,11 @@ export default function FindClinic() {
                       <button
                         className="rounded-lg px-4 py-2 text-white"
                         style={{ backgroundColor: "#e943c5" }}
-                        onClick={() =>
-                          window.open(
-                            `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
-                              clinic.mapQuery,
-                            )}`,
-                            "_blank",
-                            "noopener,noreferrer",
-                          )
-                        }
+                        onClick={() => {
+                          setLocationQuery(clinic.mapQuery);
+                          setView("map");
+                          setError("");
+                        }}
                       >
                         View Location
                       </button>

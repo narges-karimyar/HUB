@@ -35,7 +35,7 @@ export default function FindDoctor() {
     {
       id: 1,
       name: "Dr. Sarah Ahmed",
-      image: product[20].Image,
+      image: product[22].Image,
       specialty: "Neurologist",
       consultation_fee: 150,
       discount: 10,
@@ -43,7 +43,7 @@ export default function FindDoctor() {
     {
       id: 2,
       name: "Dr. John Smith",
-      image: product[17].Image,
+      image: product[19].Image,
       specialty: "Cardiologist",
       consultation_fee: 200,
       discount: 15,
@@ -51,7 +51,7 @@ export default function FindDoctor() {
     {
       id: 3,
       name: "Dr. Ahmad Sabery",
-      image: product[19].Image,
+      image: product[21].Image,
       specialty: "Orthopedic MD",
       consultation_fee: 900,
       discount: 35,
@@ -59,7 +59,7 @@ export default function FindDoctor() {
     {
       id: 4,
       name: "Dr. Sara Wakelly",
-      image: product[18].Image,
+      image: product[20].Image,
       specialty: "Kids Doctor",
       consultation_fee: 500,
       discount: 10,

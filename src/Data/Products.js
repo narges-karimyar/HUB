@@ -20,6 +20,7 @@ import firstcilinc from "../assets/firstcilinc.jpg";
 import secondclinic from "../assets/secondclinic.jpg";
 import preson from "../assets/preson.jpg";
 
+// index = id, so product[16] is always id "16"
 const product = [
   { id: "0", Image: logo, name: "logo" },
   { id: "1", Image: firsticon, name: "firsticon" },
@@ -35,13 +36,15 @@ const product = [
   { id: "11", Image: second, name: "second" },
   { id: "12", Image: therd, name: "therd" },
   { id: "13", Image: fourth, name: "fourth" },
-  { id: "16", Image: firstcilinc, name: "secondclinic" },
+  { id: "14", Image: "", name: "empty14" },
+  { id: "15", Image: "", name: "empty15" },
+  { id: "16", Image: firstcilinc, name: "firstcilinc" },
   { id: "17", Image: secondclinic, name: "secondclinic" },
   { id: "18", Image: preson, name: "preson" },
   { id: "19", Image: docter, name: "docter" },
-  { id: "20", Image: kidsdocter, name: "kid " },
-  { id: "21", Image: Amaledoctor, name: "aman" },
-  { id: "22", Image: femaledocter, name: "female" },
+  { id: "20", Image: kidsdocter, name: "kidsdocter" },
+  { id: "21", Image: Amaledoctor, name: "Amaledoctor" },
+  { id: "22", Image: femaledocter, name: "femaledocter" },
 ];
 
 export default product;

@@ -535,6 +535,7 @@ export default function Settings() {
                     DEACTIVATE
                   </button>
                   <button
+                    onClick={() => alert("YOUR ACCOUNT has been delete.")}
                     type="button"
                     className="rounded-lg bg-red-500 px-5 py-2 text-white transition-all duration-200 hover:scale-105 hover:shadow-lg"
                   >
