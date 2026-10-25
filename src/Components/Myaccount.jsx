@@ -1,11 +1,32 @@
 import React, { useMemo, useState } from "react";
 import { Link, useOutletContext } from "react-router-dom";
 import {
-  FaHouse, FaBars, FaMagnifyingGlass, FaCircleUser, FaGear,
-  FaBell, FaWifi, FaBuildingColumns, FaPaypal, FaPlus, FaPen,
-  FaTrash, FaFilePdf, FaArrowDown, FaArrowUp, FaCalendarDays,
-  FaXmark, FaCreditCard, FaWallet, FaRobot, FaPaperPlane,
-  FaEye, FaEyeSlash, FaLock, FaLockOpen, FaCircleCheck,
+  FaHouse,
+  FaBars,
+  FaMagnifyingGlass,
+  FaCircleUser,
+  FaGear,
+  FaBell,
+  FaWifi,
+  FaBuildingColumns,
+  FaPaypal,
+  FaPlus,
+  FaPen,
+  FaTrash,
+  FaFilePdf,
+  FaArrowDown,
+  FaArrowUp,
+  FaCalendarDays,
+  FaXmark,
+  FaCreditCard,
+  FaWallet,
+  FaRobot,
+  FaPaperPlane,
+  FaEye,
+  FaEyeSlash,
+  FaLock,
+  FaLockOpen,
+  FaCircleCheck,
 } from "react-icons/fa6";
 
 /* =========================
@@ -25,18 +46,78 @@ const initialInvoices = [
 ];
 
 const initialBilling = [
-  { id: 1, name: "Oliver Liam", company: "Viking Burrito", email: "oliver@burrito.com", vat: "FRB1235476" },
-  { id: 2, name: "Lucas Harper", company: "Stone Tech Zone", email: "lucas@stone-tech.com", vat: "FRB1235476" },
-  { id: 3, name: "Ethan James", company: "Fiber Nation", email: "ethan@fiber.com", vat: "FRB1235476" },
+  {
+    id: 1,
+    name: "Oliver Liam",
+    company: "Viking Burrito",
+    email: "oliver@burrito.com",
+    vat: "FRB1235476",
+  },
+  {
+    id: 2,
+    name: "Lucas Harper",
+    company: "Stone Tech Zone",
+    email: "lucas@stone-tech.com",
+    vat: "FRB1235476",
+  },
+  {
+    id: 3,
+    name: "Ethan James",
+    company: "Fiber Nation",
+    email: "ethan@fiber.com",
+    vat: "FRB1235476",
+  },
 ];
 
 const initialTransactions = [
-  { id: 1, title: "Food", date: "27 March 2020, at 12:30 PM", amount: 2500, type: "expense", group: "NEWEST" },
-  { id: 2, title: "Medicine", date: "27 March 2020, at 04:30 AM", amount: 2000, type: "income", group: "NEWEST" },
-  { id: 3, title: "Appointment", date: "26 March 2020, at 01:45 PM", amount: 750, type: "income", group: "YESTERDAY" },
-  { id: 4, title: "MarketPlace", date: "26 March 2020, at 12:30 PM", amount: 1000, type: "income", group: "YESTERDAY" },
-  { id: 5, title: "Pharmacy", date: "26 March 2020, at 08:30 AM", amount: 2500, type: "income", group: "YESTERDAY" },
-  { id: 6, title: "Bookings", date: "26 March 2020, at 05:00 AM", amount: 0, type: "pending", group: "YESTERDAY" },
+  {
+    id: 1,
+    title: "Food",
+    date: "27 March 2020, at 12:30 PM",
+    amount: 2500,
+    type: "expense",
+    group: "NEWEST",
+  },
+  {
+    id: 2,
+    title: "Medicine",
+    date: "27 March 2020, at 04:30 AM",
+    amount: 2000,
+    type: "income",
+    group: "NEWEST",
+  },
+  {
+    id: 3,
+    title: "Appointment",
+    date: "26 March 2020, at 01:45 PM",
+    amount: 750,
+    type: "income",
+    group: "YESTERDAY",
+  },
+  {
+    id: 4,
+    title: "MarketPlace",
+    date: "26 March 2020, at 12:30 PM",
+    amount: 1000,
+    type: "income",
+    group: "YESTERDAY",
+  },
+  {
+    id: 5,
+    title: "Pharmacy",
+    date: "26 March 2020, at 08:30 AM",
+    amount: 2500,
+    type: "income",
+    group: "YESTERDAY",
+  },
+  {
+    id: 6,
+    title: "Bookings",
+    date: "26 March 2020, at 05:00 AM",
+    amount: 0,
+    type: "pending",
+    group: "YESTERDAY",
+  },
 ];
 
 const initialCards = [
@@ -74,35 +155,47 @@ export default function Myaccount() {
   const query = search.trim().toLowerCase();
 
   const filteredInvoices = useMemo(
-    () => invoices.filter((item) =>
-      `${item.date} ${item.id} ${item.amount}`.toLowerCase().includes(query)
-    ),
-    [invoices, query]
+    () =>
+      invoices.filter((item) =>
+        `${item.date} ${item.id} ${item.amount}`.toLowerCase().includes(query),
+      ),
+    [invoices, query],
   );
 
   const filteredBilling = useMemo(
-    () => billing.filter((item) =>
-      `${item.name} ${item.company} ${item.email} ${item.vat}`.toLowerCase().includes(query)
-    ),
-    [billing, query]
+    () =>
+      billing.filter((item) =>
+        `${item.name} ${item.company} ${item.email} ${item.vat}`
+          .toLowerCase()
+          .includes(query),
+      ),
+    [billing, query],
   );
 
   const filteredTransactions = useMemo(
-    () => transactions.filter((item) =>
-      `${item.title} ${item.date} ${item.amount} ${item.type}`.toLowerCase().includes(query)
-    ),
-    [transactions, query]
+    () =>
+      transactions.filter((item) =>
+        `${item.title} ${item.date} ${item.amount} ${item.type}`
+          .toLowerCase()
+          .includes(query),
+      ),
+    [transactions, query],
   );
 
   const filteredCards = useMemo(
-    () => cards.filter((card) =>
-      `${card.brand} ${card.number}`.toLowerCase().includes(query)
-    ),
-    [cards, query]
+    () =>
+      cards.filter((card) =>
+        `${card.brand} ${card.number}`.toLowerCase().includes(query),
+      ),
+    [cards, query],
   );
 
-  const visibleInvoices = showAllInvoices ? filteredInvoices : filteredInvoices.slice(0, 5);
-  const visibleTransactions = showAllTransactions ? filteredTransactions : filteredTransactions.slice(0, 6);
+  const visibleInvoices = showAllInvoices
+    ? filteredInvoices
+    : filteredInvoices.slice(0, 5);
+  const visibleTransactions = showAllTransactions
+    ? filteredTransactions
+    : filteredTransactions.slice(0, 6);
 
   /* CARD ACTIONS */
 
@@ -139,21 +232,24 @@ export default function Myaccount() {
   const toggleCardVisibility = (id) => {
     setCards((previous) =>
       previous.map((card) =>
-        card.id === id ? { ...card, visible: !card.visible } : card
-      )
+        card.id === id ? { ...card, visible: !card.visible } : card,
+      ),
     );
   };
 
   const toggleCardFreeze = (id) => {
     setCards((previous) =>
       previous.map((card) =>
-        card.id === id ? { ...card, frozen: !card.frozen } : card
-      )
+        card.id === id ? { ...card, frozen: !card.frozen } : card,
+      ),
     );
   };
 
   const editCard = (card) => {
-    const updated = window.prompt("Enter the last 4 digits of the card:", card.number);
+    const updated = window.prompt(
+      "Enter the last 4 digits of the card:",
+      card.number,
+    );
     if (updated === null) return;
 
     if (!/^\d{4}$/.test(updated.trim())) {
@@ -163,8 +259,8 @@ export default function Myaccount() {
 
     setCards((previous) =>
       previous.map((item) =>
-        item.id === card.id ? { ...item, number: updated.trim() } : item
-      )
+        item.id === card.id ? { ...item, number: updated.trim() } : item,
+      ),
     );
   };
 
@@ -174,8 +270,8 @@ export default function Myaccount() {
     event.preventDefault();
     setBilling((previous) =>
       previous.map((item) =>
-        item.id === editingBilling.id ? editingBilling : item
-      )
+        item.id === editingBilling.id ? editingBilling : item,
+      ),
     );
     setEditingBilling(null);
   };
@@ -207,20 +303,35 @@ export default function Myaccount() {
 
     if (q.includes("expense") || q.includes("spend") || q.includes("مصرف")) {
       answer = `Your sample transactions show ${money(totalExpenses)} in expenses. This amount is calculated from the demo transactions currently displayed.`;
-    } else if (q.includes("income") || q.includes("received") || q.includes("عواید")) {
+    } else if (
+      q.includes("income") ||
+      q.includes("received") ||
+      q.includes("عواید")
+    ) {
       answer = `Your sample transactions show ${money(totalIncome)} in income.`;
-    } else if (q.includes("invoice") || q.includes("bill") || q.includes("فاکتور")) {
+    } else if (
+      q.includes("invoice") ||
+      q.includes("bill") ||
+      q.includes("فاکتور")
+    ) {
       answer = `There are ${invoices.length} sample invoices in this account. Their actual payment status has not been provided.`;
-    } else if (q.includes("card") || q.includes("wallet") || q.includes("کارت")) {
+    } else if (
+      q.includes("card") ||
+      q.includes("wallet") ||
+      q.includes("کارت")
+    ) {
       answer = `You have ${cards.length} sample payment cards. ${frozenCount} card(s) are marked as frozen in this demo.`;
     } else if (q.includes("transaction") || q.includes("تراکنش")) {
       answer = `There are ${transactions.length} sample transactions in your account.`;
     } else if (q.includes("hello") || q.includes("hi") || q.includes("سلام")) {
-      answer = "Hello! 💜 I'm happy to help. Ask me about your expenses, income, invoices, cards, or transactions.";
+      answer =
+        "Hello! 💜 I'm happy to help. Ask me about your expenses, income, invoices, cards, or transactions.";
     } else if (q.includes("help") || q.includes("چی") || q.includes("کمک")) {
-      answer = "Here is what I can help with:\n\n• Show expenses\n• Show income\n• Show invoices\n• Show cards\n• Show transactions";
+      answer =
+        "Here is what I can help with:\n\n• Show expenses\n• Show income\n• Show invoices\n• Show cards\n• Show transactions";
     } else {
-      answer = "I can answer questions about the sample financial data in this page. Try asking about expenses, income, invoices, payment cards, or transactions.";
+      answer =
+        "I can answer questions about the sample financial data in this page. Try asking about expenses, income, invoices, payment cards, or transactions.";
     }
 
     setAssistantMessages((previous) => [
@@ -243,7 +354,6 @@ export default function Myaccount() {
 
   return (
     <div className="contentTwo min-h-screen bg-[#F5F3FF] font-[Merriweather,serif] text-[#312E81]">
-
       {/* HEADER */}
 
       <header className="m-2.5 flex flex-wrap items-center justify-between gap-4 rounded-2xl border border-white bg-white/95 px-5 py-4 shadow-sm">
@@ -309,7 +419,6 @@ export default function Myaccount() {
       </header>
 
       <main className="space-y-6 px-3 pb-8 pt-3 sm:px-5 lg:px-6">
-
         {/* WELCOME BANNER */}
 
         <section className="relative overflow-hidden rounded-3xl bg-gradient-to-r from-[#312E81] via-[#4338CA] to-[#8B5CF6] p-6 text-white shadow-xl shadow-indigo-900/10 sm:p-8">
@@ -323,7 +432,8 @@ export default function Myaccount() {
               </p>
               <h1 className="text-2xl font-bold sm:text-3xl">My Account</h1>
               <p className="mt-3 max-w-lg text-sm leading-7 text-white/80">
-                Manage your payment methods, review transactions, and keep your account information organized.
+                Manage your payment methods, review transactions, and keep your
+                account information organized.
               </p>
             </div>
 
@@ -337,7 +447,9 @@ export default function Myaccount() {
               </span>
               <span className="text-left">
                 <span className="block">Financial Assistant</span>
-                <span className="mt-1 block text-xs text-white/70">Ask about your account</span>
+                <span className="mt-1 block text-xs text-white/70">
+                  Ask about your account
+                </span>
               </span>
             </button>
           </div>
@@ -348,7 +460,6 @@ export default function Myaccount() {
         <section className="grid grid-cols-1 items-stretch gap-6 2xl:grid-cols-[minmax(0,1.65fr)_minmax(300px,0.85fr)]">
           <div className="space-y-6">
             <div className="grid grid-cols-1 items-stretch gap-5 md:grid-cols-2 xl:grid-cols-[minmax(280px,1.1fr)_minmax(0,0.8fr)_minmax(0,0.8fr)]">
-
               {/* FEATURED BANK CARD */}
 
               <div className="relative min-h-[225px] overflow-hidden rounded-3xl bg-gradient-to-br from-[#312E81] via-[#4338CA] to-[#1E1B4B] p-5 text-white shadow-xl shadow-indigo-950/20">
@@ -379,12 +490,16 @@ export default function Myaccount() {
                   </div>
                 </div>
 
-                <p className="relative mt-4 text-[10px] text-white/40">SAMPLE CARD · DEMO ONLY</p>
+                <p className="relative mt-4 text-[10px] text-white/40">
+                  SAMPLE CARD · DEMO ONLY
+                </p>
               </div>
 
               {/* ACCOUNT BALANCE */}
 
-              <div className={`${cardStyle} flex min-h-[210px] flex-col items-center justify-center p-5 text-center transition duration-300 hover:-translate-y-1 hover:shadow-xl`}>
+              <div
+                className={`${cardStyle} flex min-h-[210px] flex-col items-center justify-center p-5 text-center transition duration-300 hover:-translate-y-1 hover:shadow-xl`}
+              >
                 <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-[#818CF8] to-[#4338CA] text-xl text-white shadow-lg shadow-indigo-200/60">
                   <FaBuildingColumns />
                 </div>
@@ -399,13 +514,17 @@ export default function Myaccount() {
 
               {/* WALLET BALANCE */}
 
-              <div className={`${cardStyle} flex min-h-[210px] flex-col items-center justify-center p-5 text-center transition duration-300 hover:-translate-y-1 hover:shadow-xl`}>
+              <div
+                className={`${cardStyle} flex min-h-[210px] flex-col items-center justify-center p-5 text-center transition duration-300 hover:-translate-y-1 hover:shadow-xl`}
+              >
                 <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-[#A78BFA] to-[#4338CA] text-xl text-white shadow-lg shadow-violet-200/60">
                   <FaPaypal />
                 </div>
                 <h3 className="font-bold">Wallet Bank Card</h3>
                 <p className="mt-1 text-xs text-[#9690B5]">Payments</p>
-                <p className="mt-6 text-2xl font-bold text-[#312E81]">$455.00</p>
+                <p className="mt-6 text-2xl font-bold text-[#312E81]">
+                  $455.00
+                </p>
                 <span className="mt-3 rounded-full bg-[#EDE9FE] px-3 py-1 text-xs font-semibold text-[#6D28D9]">
                   Demo wallet
                 </span>
@@ -418,7 +537,9 @@ export default function Myaccount() {
               <div className="flex flex-wrap items-center justify-between gap-4 border-b border-[#EDE9FE] p-5 sm:p-6">
                 <div>
                   <h2 className={sectionTitle}>Smart Card Wallet</h2>
-                  <p className="mt-2 text-xs leading-5 text-[#9690B5]">Manage your saved payment methods</p>
+                  <p className="mt-2 text-xs leading-5 text-[#9690B5]">
+                    Manage your saved payment methods
+                  </p>
                 </div>
 
                 <button
@@ -430,7 +551,7 @@ export default function Myaccount() {
                   {showCardForm ? "CANCEL" : "ADD NEW CARD"}
                 </button>
               </div>
-
+              {/* creat new card  */}
               {showCardForm && (
                 <form
                   onSubmit={addCard}
@@ -493,7 +614,9 @@ export default function Myaccount() {
                             <span className="h-6 w-6 rounded-full bg-amber-400/95" />
                           </div>
                         ) : (
-                          <span className="font-extrabold italic text-[#4338CA]">VISA</span>
+                          <span className="font-extrabold italic text-[#4338CA]">
+                            VISA
+                          </span>
                         )}
                         <span className="text-xs font-semibold uppercase tracking-wider text-[#8B83B5]">
                           {card.brand}
@@ -501,16 +624,22 @@ export default function Myaccount() {
                       </div>
 
                       {card.frozen ? (
-                        <span className="rounded-full bg-red-100 px-3 py-1 text-[10px] font-bold text-red-600">FROZEN</span>
+                        <span className="rounded-full bg-red-100 px-3 py-1 text-[10px] font-bold text-red-600">
+                          FROZEN
+                        </span>
                       ) : (
-                        <span className="rounded-full bg-[#E3F8EE] px-3 py-1 text-[10px] font-bold text-[#20885F]">ACTIVE DEMO</span>
+                        <span className="rounded-full bg-[#E3F8EE] px-3 py-1 text-[10px] font-bold text-[#20885F]">
+                          ACTIVE DEMO
+                        </span>
                       )}
                     </div>
 
                     <div className="relative mt-7 flex items-center gap-3">
                       <FaCreditCard className="text-xl text-[#6D5BD0]" />
                       <p className="text-base font-bold tracking-[0.12em] text-[#312E81]">
-                        {card.visible ? `•••• •••• •••• ${card.number}` : "•••• •••• •••• ••••"}
+                        {card.visible
+                          ? `•••• •••• •••• ${card.number}`
+                          : "•••• •••• •••• ••••"}
                       </p>
                     </div>
 
@@ -538,7 +667,11 @@ export default function Myaccount() {
                         <button
                           type="button"
                           onClick={() => toggleCardFreeze(card.id)}
-                          title={card.frozen ? "Unfreeze demo card" : "Freeze demo card"}
+                          title={
+                            card.frozen
+                              ? "Unfreeze demo card"
+                              : "Freeze demo card"
+                          }
                           className={`flex items-center gap-2 rounded-lg px-3 py-2 text-xs font-semibold transition ${
                             card.frozen
                               ? "bg-[#E3F8EE] text-[#20885F] hover:bg-[#D1F2E3]"
@@ -582,7 +715,9 @@ export default function Myaccount() {
             <div className="mb-6 flex items-center justify-between gap-3">
               <div>
                 <h2 className={sectionTitle}>Invoices</h2>
-                <p className="mt-2 text-xs text-[#9690B5]">Your billing history</p>
+                <p className="mt-2 text-xs text-[#9690B5]">
+                  Your billing history
+                </p>
               </div>
               <button
                 type="button"
@@ -600,17 +735,21 @@ export default function Myaccount() {
                   className="flex items-center justify-between gap-3 border-b border-[#F0EDFA] pb-4 last:border-0 last:pb-0"
                 >
                   <div className="min-w-0">
-                    <p className="text-sm font-semibold text-[#433D70]">{invoice.date}</p>
+                    <p className="text-sm font-semibold text-[#433D70]">
+                      {invoice.date}
+                    </p>
                     <p className="mt-2 text-xs text-[#9690B5]">{invoice.id}</p>
                   </div>
 
                   <div className="flex shrink-0 items-center gap-3">
-                    <span className="text-sm font-bold">{money(invoice.amount)}</span>
+                    <span className="text-sm font-bold">
+                      {money(invoice.amount)}
+                    </span>
                     <button
                       type="button"
                       onClick={() =>
                         alert(
-                          `Invoice ${invoice.id}\nDate: ${invoice.date}\nAmount: ${money(invoice.amount)}\n\nPDF generation needs a PDF generator or backend.`
+                          `Invoice ${invoice.id}\nDate: ${invoice.date}\nAmount: ${money(invoice.amount)}\n\nPDF generation needs a PDF generator or backend.`,
                         )
                       }
                       className="flex items-center gap-1 text-xs font-bold text-[#6D5BD0] hover:text-[#4338CA]"
@@ -623,7 +762,9 @@ export default function Myaccount() {
               ))}
 
               {visibleInvoices.length === 0 && (
-                <p className="py-8 text-center text-sm text-[#9690B5]">No invoices found.</p>
+                <p className="py-8 text-center text-sm text-[#9690B5]">
+                  No invoices found.
+                </p>
               )}
             </div>
           </section>
@@ -632,14 +773,15 @@ export default function Myaccount() {
         {/* BILLING + TRANSACTIONS */}
 
         <section className="grid grid-cols-1 items-start gap-6 xl:grid-cols-[minmax(0,1.4fr)_minmax(300px,0.9fr)]">
-
           {/* BILLING INFORMATION */}
 
           <section className={`${cardStyle} min-w-0 p-5 sm:p-6`}>
             <div className="mb-7 flex flex-wrap items-center justify-between gap-3">
               <div>
                 <h2 className={sectionTitle}>Billing Information</h2>
-                <p className="mt-2 text-xs text-[#9690B5]">Manage your billing details</p>
+                <p className="mt-2 text-xs text-[#9690B5]">
+                  Manage your billing details
+                </p>
               </div>
               <span className="rounded-xl bg-[#EDE9FE] px-3 py-2 text-xs font-semibold text-[#6D5BD0]">
                 {filteredBilling.length} Records
@@ -678,7 +820,9 @@ export default function Myaccount() {
                       <span className="font-semibold">{item.company}</span>
                     </p>
                     <p className="break-all">
-                      <span className="mr-2 text-[#8B83B5]">Email Address:</span>
+                      <span className="mr-2 text-[#8B83B5]">
+                        Email Address:
+                      </span>
                       <span className="font-semibold">{item.email}</span>
                     </p>
                     <p className="break-words">
@@ -690,7 +834,9 @@ export default function Myaccount() {
               ))}
 
               {filteredBilling.length === 0 && (
-                <p className="py-8 text-center text-sm text-[#9690B5]">No billing information found.</p>
+                <p className="py-8 text-center text-sm text-[#9690B5]">
+                  No billing information found.
+                </p>
               )}
             </div>
           </section>
@@ -701,7 +847,9 @@ export default function Myaccount() {
             <div className="mb-6 flex flex-wrap items-center justify-between gap-3">
               <div>
                 <h2 className={sectionTitle}>Your Transactions</h2>
-                <p className="mt-2 text-xs text-[#9690B5]">Recent account activity</p>
+                <p className="mt-2 text-xs text-[#9690B5]">
+                  Recent account activity
+                </p>
               </div>
               <button
                 type="button"
@@ -746,8 +894,12 @@ export default function Myaccount() {
                       </div>
 
                       <div className="min-w-0 flex-1">
-                        <h3 className="text-sm font-bold">{transaction.title}</h3>
-                        <p className="mt-1 text-xs leading-5 text-[#9690B5]">{transaction.date}</p>
+                        <h3 className="text-sm font-bold">
+                          {transaction.title}
+                        </h3>
+                        <p className="mt-1 text-xs leading-5 text-[#9690B5]">
+                          {transaction.date}
+                        </p>
                       </div>
 
                       <p
@@ -759,8 +911,14 @@ export default function Myaccount() {
                               : "text-[#6D5BD0]"
                         }`}
                       >
-                        {transaction.type === "expense" ? "- " : transaction.type === "income" ? "+ " : ""}
-                        {transaction.type === "pending" ? "Pending" : money(transaction.amount)}
+                        {transaction.type === "expense"
+                          ? "- "
+                          : transaction.type === "income"
+                            ? "+ "
+                            : ""}
+                        {transaction.type === "pending"
+                          ? "Pending"
+                          : money(transaction.amount)}
                       </p>
                     </article>
                   </React.Fragment>
@@ -768,7 +926,9 @@ export default function Myaccount() {
               })}
 
               {visibleTransactions.length === 0 && (
-                <p className="py-8 text-center text-sm text-[#9690B5]">No transactions found.</p>
+                <p className="py-8 text-center text-sm text-[#9690B5]">
+                  No transactions found.
+                </p>
               )}
             </div>
           </section>
@@ -779,10 +939,13 @@ export default function Myaccount() {
         <footer className="flex flex-col items-center justify-between gap-4 px-2 py-5 text-center text-xs text-[#9690B5] sm:flex-row sm:text-left">
           <p>
             © {new Date().getFullYear()}, made with{" "}
-            <span className="text-[#8B5CF6]">♥</span> by MyPiHUB for a better web.
+            <span className="text-[#8B5CF6]">♥</span> by MyPiHUB for a better
+            web.
           </p>
           <div className="flex items-center gap-6">
-            <Link to="/" className="transition hover:text-[#4338CA]">MyPatientHUB</Link>
+            <Link to="/" className="transition hover:text-[#4338CA]">
+              MyPatientHUB
+            </Link>
             <button
               type="button"
               onClick={() => alert("MyPatientHUB - About Us")}
@@ -799,7 +962,6 @@ export default function Myaccount() {
       <div className="fixed bottom-5 right-5 z-40 font-sans">
         {assistantOpen && (
           <div className="mb-4 flex h-[min(500px,70vh)] w-[min(365px,calc(100vw-32px))] flex-col overflow-hidden rounded-3xl border border-white/80 bg-white shadow-2xl shadow-indigo-950/25">
-
             <div className="relative overflow-hidden bg-gradient-to-r from-[#312E81] via-[#4338CA] to-[#8B5CF6] p-5 text-white">
               <div className="absolute -right-8 -top-12 h-32 w-32 rounded-full bg-white/10 blur-2xl" />
               <div className="relative flex items-center justify-between gap-3">
@@ -809,7 +971,9 @@ export default function Myaccount() {
                   </div>
                   <div>
                     <h3 className="font-bold">MyPatient Assistant</h3>
-                    <p className="mt-1 text-xs text-white/75">Your financial companion</p>
+                    <p className="mt-1 text-xs text-white/75">
+                      Your financial companion
+                    </p>
                     <p className="mt-1 flex items-center gap-1.5 text-[10px] text-[#C9FFE4]">
                       <span className="h-1.5 w-1.5 rounded-full bg-[#6AF0B0]" />
                       Demo assistant online
@@ -852,9 +1016,17 @@ export default function Myaccount() {
             </div>
 
             <div className="space-y-3 border-t border-[#E9E5FF] bg-white p-3">
-              <p className="text-[10px] font-bold uppercase tracking-wider text-[#9690B5]">Quick questions</p>
+              <p className="text-[10px] font-bold uppercase tracking-wider text-[#9690B5]">
+                Quick questions
+              </p>
               <div className="flex flex-wrap gap-2">
-                {["Show expenses", "Show income", "Show invoices", "Show cards", "Show transactions"].map((question) => (
+                {[
+                  "Show expenses",
+                  "Show income",
+                  "Show invoices",
+                  "Show cards",
+                  "Show transactions",
+                ].map((question) => (
                   <button
                     key={question}
                     type="button"
@@ -899,7 +1071,11 @@ export default function Myaccount() {
         <button
           type="button"
           onClick={() => setAssistantOpen(!assistantOpen)}
-          aria-label={assistantOpen ? "Close financial assistant" : "Open financial assistant"}
+          aria-label={
+            assistantOpen
+              ? "Close financial assistant"
+              : "Open financial assistant"
+          }
           className="ml-auto flex h-16 w-16 items-center justify-center rounded-2xl border border-white/20 bg-gradient-to-br from-[#312E81] via-[#4338CA] to-[#A78BFA] text-2xl text-white shadow-xl shadow-indigo-900/30 transition duration-300 hover:-translate-y-1 hover:shadow-2xl"
         >
           {assistantOpen ? <FaXmark /> : <FaRobot />}
@@ -921,8 +1097,12 @@ export default function Myaccount() {
           >
             <div className="mb-6 flex items-center justify-between gap-3">
               <div>
-                <p className="mb-2 text-xs font-bold uppercase tracking-widest text-[#7C3AED]">ACCOUNT DETAILS</p>
-                <h2 className="text-xl font-bold text-[#312E81]">Edit Billing Information</h2>
+                <p className="mb-2 text-xs font-bold uppercase tracking-widest text-[#7C3AED]">
+                  ACCOUNT DETAILS
+                </p>
+                <h2 className="text-xl font-bold text-[#312E81]">
+                  Edit Billing Information
+                </h2>
               </div>
               <button
                 type="button"
@@ -941,7 +1121,10 @@ export default function Myaccount() {
                 ["email", "Email Address"],
                 ["vat", "VAT Number"],
               ].map(([field, label]) => (
-                <label key={field} className="block text-sm font-semibold text-[#433D70]">
+                <label
+                  key={field}
+                  className="block text-sm font-semibold text-[#433D70]"
+                >
                   {label}
                   <input
                     type={field === "email" ? "email" : "text"}

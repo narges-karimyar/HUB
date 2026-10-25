@@ -15,28 +15,41 @@ import Chat from "./Components/Chat";
 import CircleChart from "./Components/CircleChart";
 import SecondCircle from "./Components/SecondCircle";
 import LineBarAreaChart from "./Components/LineBarAreaChart";
-
+import SignUP from "./Components/SignUP";
+import HighlightAndZoomLineChart from "./Components/HighlightAndZoomLineChart";
+import SimpleBarChart from "./Components/SimpleBarChart";
 export default function App() {
   const [logged, setLogged] = useState(false);
-  if (logged === false) {
-    return <Login onLogin={() => setLogged(true)} />;
-  }
+
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route element={<Layout onLogout={() => setLogged(false)} />}>
-          <Route path="/" element={<Dashboard />} />
-          <Route path="/appointments" element={<h1>Appointments</h1>} />
-          <Route path="/find-doctor" element={<FindDoctor />} />
-          <Route path="/find-clinic" element={<FindClinic />} />
-          <Route path="/chat" element={<Chat />} />
-          <Route path="/marketplace" element={<FindMarketplace />} />
-          <Route path="/Pharmacy" element={<Findpharmacy />} />
-          <Route path="/dependents" element={<MyDependents />} />
-          <Route path="/account" element={<Myaccount />} />
-          <Route path="/settings" element={<Settings />} />
-        </Route>
-      </Routes>
-    </BrowserRouter>
+    <Routes>
+      <Route
+        path="/"
+        element={
+          logged ? (
+            <Layout onLogout={() => setLogged(false)} />
+          ) : (
+            <Login onLogin={() => setLogged(true)} />
+          )
+        }
+      >
+        {/* Keep your existing dashboard routes here */}
+        <Route index element={<Dashboard />} />
+        <Route path="appointments" element={<h1>Appointment</h1>} />
+        <Route path="find-doctor" element={<FindDoctor />} />
+        <Route path="find-clinic" element={<FindClinic />} />
+        <Route path="chat" element={<Chat />} />
+        <Route path="marketplace" element={<FindMarketplace />} />
+        <Route path="Pharmacy" element={<Findpharmacy />} />
+        <Route path="dependents" element={<MyDependents />} />
+        <Route path="account" element={<Myaccount />} />
+        <Route path="settings" element={<Settings />} />
+      </Route>
+
+      <Route
+        path="/SignUP"
+        element={<SignUP onLogin={() => setLogged(true)} />}
+      />
+    </Routes>
   );
 }

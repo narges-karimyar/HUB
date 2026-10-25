@@ -119,7 +119,7 @@ const welcomeMessages = {
     },
   ],
 };
-
+// maasege the send
 const autoReplies = [
   "Thanks for your message!",
   "That sounds good. Thank you for letting me know.",
@@ -166,7 +166,7 @@ export default function Chat() {
   });
 
   const [messages, setMessages] = useState(() =>
-    readStorage(STORAGE_KEY, welcomeMessages)
+    readStorage(STORAGE_KEY, welcomeMessages),
   );
 
   const [activeId, setActiveId] = useState("henry");
@@ -186,9 +186,7 @@ export default function Chat() {
   const fileInputRef = useRef(null);
   const replyCounter = useRef(0);
 
-  const activeContact = contacts.find(
-    (contact) => contact.id === activeId
-  );
+  const activeContact = contacts.find((contact) => contact.id === activeId);
 
   const activeMessages = messages[activeId] || [];
 
@@ -216,29 +214,19 @@ export default function Chat() {
   }, [notice]);
 
   const filteredContacts = useMemo(() => {
-    const query = `${search} ${headerSearch}`
-      .trim()
-      .toLowerCase();
+    const query = `${search} ${headerSearch}`.trim().toLowerCase();
 
     return [...contacts]
       .filter((contact) => {
-        const matchesName = contact.name
-          .toLowerCase()
-          .includes(query);
+        const matchesName = contact.name.toLowerCase().includes(query);
 
-        const matchesMessage = (
-          messages[contact.id] || []
-        ).some((message) =>
-          message.text.toLowerCase().includes(query)
+        const matchesMessage = (messages[contact.id] || []).some((message) =>
+          message.text.toLowerCase().includes(query),
         );
 
-        const matchesFavorite =
-          !favoritesOnly || contact.favorite;
+        const matchesFavorite = !favoritesOnly || contact.favorite;
 
-        return (
-          (!query || matchesName || matchesMessage) &&
-          matchesFavorite
-        );
+        return (!query || matchesName || matchesMessage) && matchesFavorite;
       })
       .sort((a, b) => Number(b.pinned) - Number(a.pinned));
   }, [contacts, messages, search, headerSearch, favoritesOnly]);
@@ -249,7 +237,7 @@ export default function Chat() {
     if (!query) return activeMessages;
 
     return activeMessages.filter((message) =>
-      message.text.toLowerCase().includes(query)
+      message.text.toLowerCase().includes(query),
     );
   }, [activeMessages, messageSearch]);
 
@@ -266,10 +254,8 @@ export default function Chat() {
   function updateContact(id, property) {
     setContacts((previous) =>
       previous.map((contact) =>
-        contact.id === id
-          ? { ...contact, ...property }
-          : contact
-      )
+        contact.id === id ? { ...contact, ...property } : contact,
+      ),
     );
   }
 
@@ -298,10 +284,7 @@ export default function Chat() {
 
     setMessages((previous) => ({
       ...previous,
-      [contactId]: [
-        ...(previous[contactId] || []),
-        newMessage,
-      ],
+      [contactId]: [...(previous[contactId] || []), newMessage],
     }));
 
     setMessageText("");
@@ -310,9 +293,7 @@ export default function Chat() {
 
     const reply = {
       id: `${Date.now()}-reply`,
-      text: autoReplies[
-        replyCounter.current % autoReplies.length
-      ],
+      text: autoReplies[replyCounter.current % autoReplies.length],
       sender: "them",
       time: getCurrentTime(),
     };
@@ -337,7 +318,7 @@ export default function Chat() {
     setMessages((previous) => ({
       ...previous,
       [activeId]: (previous[activeId] || []).filter(
-        (message) => message.id !== messageId
+        (message) => message.id !== messageId,
       ),
     }));
 
@@ -346,7 +327,7 @@ export default function Chat() {
 
   function clearConversation() {
     const confirmed = window.confirm(
-      `Are you sure you want to clear the conversation with ${activeContact?.name}?`
+      `Are you sure you want to clear the conversation with ${activeContact?.name}?`,
     );
 
     if (!confirmed) return;
@@ -377,9 +358,7 @@ export default function Chat() {
   }
 
   function handleLogout() {
-    const confirmed = window.confirm(
-      "Are you sure you want to log out?"
-    );
+    const confirmed = window.confirm("Are you sure you want to log out?");
 
     if (confirmed) onLogout();
   }
@@ -393,12 +372,9 @@ export default function Chat() {
   }
 
   function startCall(type) {
-    const callType =
-      type === "video" ? "Video call" : "Voice call";
+    const callType = type === "video" ? "Video call" : "Voice call";
 
-    setNotice(
-      `${callType} with ${activeContact.name} is a demo feature.`
-    );
+    setNotice(`${callType} with ${activeContact.name} is a demo feature.`);
   }
 
   return (
@@ -433,12 +409,8 @@ export default function Chat() {
           </span>
 
           <div>
-            <h1 className="text-lg font-bold text-[#45336f]">
-              My Chat
-            </h1>
-            <p className="text-xs text-gray-400">
-              Your conversations
-            </p>
+            <h1 className="text-lg font-bold text-[#45336f]">My Chat</h1>
+            <p className="text-xs text-gray-400">Your conversations</p>
           </div>
         </div>
 
@@ -448,9 +420,7 @@ export default function Chat() {
           <input
             type="text"
             value={headerSearch}
-            onChange={(event) =>
-              setHeaderSearch(event.target.value)
-            }
+            onChange={(event) => setHeaderSearch(event.target.value)}
             placeholder="Search contacts..."
             aria-label="Search contacts"
             className="w-full rounded-xl border border-[#e6def6] bg-[#faf9ff] py-2.5 pl-10 pr-3 text-sm outline-none transition focus:border-[#a48ae7] focus:ring-2 focus:ring-[#eee7ff]"
@@ -514,9 +484,7 @@ export default function Chat() {
           <div className="border-b border-[#eee9f8] bg-gradient-to-r from-[#f0eaff] to-[#fbf9ff] p-5">
             <div className="mb-4 flex items-center justify-between">
               <div>
-                <h2 className="text-lg font-bold text-[#493574]">
-                  Messages
-                </h2>
+                <h2 className="text-lg font-bold text-[#493574]">Messages</h2>
                 <p className="mt-1 text-xs text-gray-500">
                   {contacts.length} contacts
                 </p>
@@ -681,9 +649,7 @@ export default function Chat() {
                       {activeContact.name}
                     </button>
 
-                    <p className="mt-1 text-xs text-gray-400">
-                      Conversation
-                    </p>
+                    <p className="mt-1 text-xs text-gray-400">Conversation</p>
                   </div>
                 </div>
 
@@ -780,9 +746,7 @@ export default function Chat() {
 
                   <input
                     value={messageSearch}
-                    onChange={(event) =>
-                      setMessageSearch(event.target.value)
-                    }
+                    onChange={(event) => setMessageSearch(event.target.value)}
                     placeholder="Search messages in this conversation..."
                     className="w-full rounded-xl border border-[#eee7fa] bg-white py-2 pl-9 pr-9 text-xs outline-none focus:border-[#a48ae7]"
                   />
@@ -880,9 +844,7 @@ export default function Chat() {
                                 <p className="text-[10px] opacity-75">
                                   {Math.max(
                                     1,
-                                    Math.round(
-                                      message.attachment.size / 1024
-                                    )
+                                    Math.round(message.attachment.size / 1024),
                                   )}{" "}
                                   KB
                                 </p>
@@ -899,10 +861,7 @@ export default function Chat() {
                           <span>{message.time}</span>
 
                           {mine && (
-                            <FaCheck
-                              className="text-[#8b72d0]"
-                              title="Sent"
-                            />
+                            <FaCheck className="text-[#8b72d0]" title="Sent" />
                           )}
 
                           <button
@@ -1023,9 +982,7 @@ export default function Chat() {
                   <textarea
                     rows={1}
                     value={messageText}
-                    onChange={(event) =>
-                      setMessageText(event.target.value)
-                    }
+                    onChange={(event) => setMessageText(event.target.value)}
                     onKeyDown={(event) => {
                       if (
                         event.key === "Enter" &&
@@ -1057,9 +1014,7 @@ export default function Chat() {
                     Press Enter to send · Shift + Enter for a new line
                   </p>
 
-                  <p className="text-[10px] text-[#9b89c5]">
-                    My Chat
-                  </p>
+                  <p className="text-[10px] text-[#9b89c5]">My Chat</p>
                 </div>
               </form>
             </>
@@ -1112,18 +1067,14 @@ export default function Chat() {
                 {activeContact.name}
               </h2>
 
-              <p className="mt-1 text-sm text-gray-400">
-                Chat contact
-              </p>
+              <p className="mt-1 text-sm text-gray-400">Chat contact</p>
 
               <div className="mt-6 grid w-full grid-cols-2 gap-3">
                 <div className="rounded-2xl bg-[#f5f0ff] p-4 text-center">
                   <p className="text-2xl font-bold text-[#8064c7]">
                     {(messages[activeId] || []).length}
                   </p>
-                  <p className="mt-1 text-xs text-gray-500">
-                    Total messages
-                  </p>
+                  <p className="mt-1 text-xs text-gray-500">Total messages</p>
                 </div>
 
                 <div className="rounded-2xl bg-[#f5f0ff] p-4 text-center">
@@ -1139,9 +1090,7 @@ export default function Chat() {
                   </div>
 
                   <p className="mt-2 text-xs text-gray-500">
-                    {activeContact.favorite
-                      ? "Favorite"
-                      : "Not a favorite"}
+                    {activeContact.favorite ? "Favorite" : "Not a favorite"}
                   </p>
                 </div>
               </div>
@@ -1157,9 +1106,7 @@ export default function Chat() {
                   className="flex flex-1 items-center justify-center gap-2 rounded-xl border border-[#e8e1fa] px-3 py-3 text-sm text-[#8064c7] transition hover:bg-[#f5f0ff]"
                 >
                   <FaStar />
-                  {activeContact.favorite
-                    ? "Unfavorite"
-                    : "Favorite"}
+                  {activeContact.favorite ? "Unfavorite" : "Favorite"}
                 </button>
 
                 <button
@@ -1192,10 +1139,7 @@ export default function Chat() {
         <p>© 2026 My Chat. Made with care.</p>
 
         <div className="flex items-center gap-4">
-          <Link
-            to="/account"
-            className="transition hover:text-[#8064c7]"
-          >
+          <Link to="/account" className="transition hover:text-[#8064c7]">
             My Account
           </Link>
 
