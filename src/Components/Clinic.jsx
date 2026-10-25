@@ -138,7 +138,7 @@ export default function FindClinic() {
       address: "Aliabad, behind Kabul Medical University",
       city: "Kabul, Afghanistan",
       rating: "—",
-      reviews: "Not provided",
+      reviews: "4.2",
       image: firstcilinc?.Image,
       mapQuery:
         "French Medical Institute for Mothers and Children, Kabul, Afghanistan",
@@ -148,7 +148,7 @@ export default function FindClinic() {
       address: "Red Crescent, 5th Phase, Kabul",
       city: "Kabul, Afghanistan",
       rating: "—",
-      reviews: "Not provided",
+      reviews: "5.2",
       image: secondclinic?.Image,
       mapQuery: "Ariana Medical Complex, Kabul, Afghanistan",
     },
