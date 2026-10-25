@@ -178,10 +178,6 @@ export default function MyDependents() {
                   <h1 className="text-[#344a70] text-xl sm:text-2xl">
                     Dependents Health Record
                   </h1>
-
-                  <p className="text-gray-400 mt-3">
-                    Add health information for your dependent.
-                  </p>
                 </>
               )}
             </div>
@@ -374,9 +370,9 @@ export default function MyDependents() {
                   <hr className="my-3 border-gray-300" />
 
                   <ul className="space-y-2 text-gray-600">
-                    <li>Detail One</li>
+                    <li>✔️Detail One</li>
                     <li>Detail Two</li>
-                    <li>Detail Three</li>
+                    <li>✔️Detail Three</li>
                   </ul>
                 </div>
 
@@ -390,7 +386,7 @@ export default function MyDependents() {
 
                   <ul className="space-y-2 text-gray-600">
                     <li>Detail One</li>
-                    <li>Detail Two</li>
+                    <li>✔️Detail Two</li>
                     <li>Detail Three</li>
                   </ul>
                 </div>
@@ -405,8 +401,8 @@ export default function MyDependents() {
 
                   <ul className="space-y-2 text-gray-600">
                     <li>Detail One</li>
-                    <li>Detail Two</li>
-                    <li>Detail Three</li>
+                    <li>✔️Detail Two</li>
+                    <li>✔️Detail Three</li>
                   </ul>
                 </div>
               </div>
