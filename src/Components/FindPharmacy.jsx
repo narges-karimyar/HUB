@@ -1,6 +1,5 @@
 import React, { useMemo, useState } from "react";
 import { Link, useOutletContext } from "react-router-dom";
-
 import {
   FaHouse,
   FaBars,
@@ -16,7 +15,6 @@ import {
   FaXmark,
   FaLocationDot,
 } from "react-icons/fa6";
-
 // Medicine images
 import coughImage from "../assets/cough.png";
 import ibuprofenImage from "../assets/ibuprofen.jpg";
@@ -26,7 +24,6 @@ import nebilImage from "../assets/nebil.jpg";
 import ogrelImage from "../assets/ogrel.jpg";
 import paracetamolImage from "../assets/paracetamol.jpg";
 import vitImage from "../assets/vit.jpg";
-
 // Pharmacy images
 import allPharmacyImage from "../assets/all pharmacy.jpg";
 import cityPharmacyImage from "../assets/city pharmacy.jpg";
@@ -34,7 +31,6 @@ import htPharmacyImage from "../assets/ht pharmacy.jpg";
 import leePharmacyImage from "../assets/lee pharmacy.jpg";
 import okPharmacyImage from "../assets/ok pharmacy.jpg";
 import omidPharmacyImage from "../assets/omid pharmacy.jpg";
-
 const medicines = [
   {
     id: 8234,
@@ -47,7 +43,7 @@ const medicines = [
     description:
       "Please check the product label and confirm availability with the pharmacy.",
     discount: 1,
-    price: 5,
+    price: 100,
     eta: 25,
   },
   {
@@ -61,7 +57,7 @@ const medicines = [
     description:
       "Contact the pharmacy to confirm the available strength and product details.",
     discount: 3,
-    price: 9,
+    price: 80,
     eta: 30,
   },
   {
@@ -75,7 +71,7 @@ const medicines = [
     description:
       "Please confirm the product details and suitability with a pharmacist.",
     discount: 5,
-    price: 7,
+    price: 150,
     eta: 35,
   },
   {
@@ -89,7 +85,7 @@ const medicines = [
     description:
       "Availability and product details must be confirmed with the pharmacy.",
     discount: 5,
-    price: 9,
+    price: 180,
     eta: 40,
   },
   {
@@ -103,7 +99,7 @@ const medicines = [
     description:
       "Ask a pharmacist about the product and verify its ingredients and strength.",
     discount: 7,
-    price: 20,
+    price: 120,
     eta: 45,
   },
   {
@@ -117,7 +113,7 @@ const medicines = [
     description:
       "Please confirm the actual pharmacy, stock, and product details before ordering.",
     discount: 0,
-    price: 20,
+    price: 100,
     eta: 30,
   },
   {
@@ -131,7 +127,7 @@ const medicines = [
     description:
       "Ask a pharmacist about the appropriate product and strength for your needs.",
     discount: 0,
-    price: 6,
+    price: 50,
     eta: 20,
   },
   {
@@ -145,28 +141,23 @@ const medicines = [
     description:
       "Check the product label and consult a pharmacist about suitability.",
     discount: 2,
-    price: 12,
+    price: 150,
     eta: 35,
   },
 ];
-
-const formatPrice = (price) => `${price} RM`;
-
+const formatPrice = (price) => `${price} AFN`;
 const getBotAnswer = (question) => {
   const normalized = question.toLowerCase().trim();
-
   const matchedMedicine = medicines.find((medicine) => {
     const searchTerms = [
       medicine.name,
       ...(medicine.aliases || []),
       String(medicine.id),
     ];
-
     return searchTerms.some((term) =>
       normalized.includes(term.toLowerCase())
     );
   });
-
   if (matchedMedicine) {
     return (
       `Medicine: ${matchedMedicine.name}\n` +
@@ -177,7 +168,6 @@ const getBotAnswer = (question) => {
       `Please confirm the actual price, stock, and delivery time with the pharmacy. These are demonstration listings.`
     );
   }
-
   if (
     normalized.includes("delivery") ||
     normalized.includes("time") ||
@@ -192,18 +182,16 @@ const getBotAnswer = (question) => {
       "Please contact the pharmacy to confirm the actual delivery time."
     );
   }
-
   if (
     normalized.includes("price") ||
     normalized.includes("cost") ||
     normalized.includes("قیمت")
   ) {
     return (
-      "The listed prices are displayed in RM. You can compare all eight products " +
+      "The listed prices are displayed in AFN. You can compare all eight products " +
       "in the cards and table. These are demonstration prices and must be confirmed with the pharmacy."
     );
   }
-
   if (
     normalized.includes("list") ||
     normalized.includes("all medicines") ||
@@ -216,7 +204,6 @@ const getBotAnswer = (question) => {
       "Type a product name to see its listed details."
     );
   }
-
   if (
     normalized.includes("dose") ||
     normalized.includes("dosage") ||
@@ -231,7 +218,6 @@ const getBotAnswer = (question) => {
       "pregnancy, or when taking other medicines."
     );
   }
-
   if (
     normalized.includes("hello") ||
     normalized.includes("hi") ||
@@ -242,18 +228,15 @@ const getBotAnswer = (question) => {
       "their displayed prices, pharmacies, or estimated delivery times."
     );
   }
-
   return (
     "I can help with the eight medicines listed on this page. " +
     "Try typing Paracetamol, Ibuprofen, Nebil, Cough Syrup, or another medicine name. " +
     "You can also ask about prices or delivery estimates. I cannot provide a medical diagnosis."
   );
 };
-
 export default function FindPharmacy() {
   const outletContext = useOutletContext() || {};
   const { open, setOpen, onLogout } = outletContext;
-
   const [search, setSearch] = useState("");
   const [tableSearch, setTableSearch] = useState("");
   const [entries, setEntries] = useState(7);
@@ -261,7 +244,6 @@ export default function FindPharmacy() {
   const [chatOpen, setChatOpen] = useState(false);
   const [chatInput, setChatInput] = useState("");
   const [selectedMedicine, setSelectedMedicine] = useState(null);
-
   const [messages, setMessages] = useState([
     {
       sender: "bot",
@@ -269,16 +251,13 @@ export default function FindPharmacy() {
         "Hello! I'm your Pharmacy Assistant. Ask me about a medicine name, its listed price, pharmacy, or estimated delivery time.",
     },
   ]);
-
   const filteredMedicines = useMemo(() => {
     const query = `${search} ${tableSearch}`
       .trim()
       .toLowerCase()
       .split(/\s+/)
       .filter(Boolean);
-
     if (!query.length) return medicines;
-
     return medicines.filter((medicine) => {
       const searchableText = [
         medicine.name,
@@ -290,63 +269,48 @@ export default function FindPharmacy() {
       ]
         .join(" ")
         .toLowerCase();
-
       return query.every((word) => searchableText.includes(word));
     });
   }, [search, tableSearch]);
-
   const totalPages = Math.max(
     1,
     Math.ceil(filteredMedicines.length / entries)
   );
-
   const safePage = Math.min(currentPage, totalPages);
-
   const visibleMedicines = filteredMedicines.slice(
     (safePage - 1) * entries,
     safePage * entries
   );
-
   const firstEntry = filteredMedicines.length
     ? (safePage - 1) * entries + 1
     : 0;
-
   const lastEntry = Math.min(
     safePage * entries,
     filteredMedicines.length
   );
-
   const handleSearch = (value) => {
     setSearch(value);
     setCurrentPage(1);
   };
-
   const handleTableSearch = (value) => {
     setTableSearch(value);
     setCurrentPage(1);
   };
-
   const sendMessage = (event) => {
     event?.preventDefault();
-
     const question = chatInput.trim();
     if (!question) return;
-
     const answer = getBotAnswer(question);
-
     setMessages((previous) => [
       ...previous,
       { sender: "user", text: question },
       { sender: "bot", text: answer },
     ]);
-
     setChatInput("");
   };
-
   const handleBuyNow = (medicine) => {
     setSelectedMedicine(medicine);
   };
-
   const handleLogout = () => {
     if (window.confirm("Are you sure you want to log out?")) {
       if (onLogout) {
@@ -356,30 +320,25 @@ export default function FindPharmacy() {
       }
     }
   };
-
   return (
     <div className="contentTwo min-h-screen bg-[#f7f8fc] font-[Merriweather,serif] text-[#26334d]">
       {/* HEADER */}
       <header className="m-2.5 flex flex-wrap items-center justify-between gap-4 rounded-xl bg-white p-5 shadow-sm">
         <div className="flex items-center gap-3">
           <FaHouse className="text-[#5368a5]" />
-
           <div>
             <p className="text-sm text-gray-500">
               / &nbsp; Pharmacyplace
             </p>
             <h1 className="font-bold">Pharmacyplace</h1>
           </div>
-
           <FaBars
             onClick={() => setOpen && setOpen(!open)}
             className="ml-3 cursor-pointer text-lg hover:text-purple-600"
           />
         </div>
-
         <div className="relative w-[250px] max-lg:w-[190px] max-sm:w-full">
           <FaMagnifyingGlass className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500" />
-
           <input
             type="text"
             value={search}
@@ -389,7 +348,6 @@ export default function FindPharmacy() {
             className="w-full rounded-xl border border-gray-200 bg-white py-2.5 pl-10 pr-3 outline-none transition focus:border-purple-400 focus:ring-2 focus:ring-purple-100"
           />
         </div>
-
         <div className="flex items-center gap-3 text-gray-600">
           <Link
             to="/account"
@@ -398,7 +356,6 @@ export default function FindPharmacy() {
           >
             <FaCircleUser />
           </Link>
-
           <button
             type="button"
             onClick={handleLogout}
@@ -406,11 +363,9 @@ export default function FindPharmacy() {
           >
             Log out
           </button>
-
           <Link to="/settings" aria-label="Settings">
             <FaGear className="hover:text-purple-600" />
           </Link>
-
           <button
             type="button"
             aria-label="Notifications"
@@ -420,30 +375,25 @@ export default function FindPharmacy() {
           </button>
         </div>
       </header>
-
       <main className="px-5 pb-8 pt-5 sm:px-7">
         {/* INTRODUCTION */}
         <section className="mb-7">
           <div className="mb-2 flex items-center gap-2">
             <FaCapsules className="text-purple-600" />
-
             <h2 className="text-xl font-bold sm:text-2xl">
               Search Pharmacies for Medicines
             </h2>
           </div>
-
           <p className="text-sm leading-6 text-gray-500">
             Search medicines, compare listed prices, and check estimated delivery times.
           </p>
         </section>
-
         {/* DELIVERY FEATURES */}
         <section className="mb-8 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
           <div className="flex items-center gap-4 rounded-2xl border border-purple-100 bg-white p-5 shadow-[0_4px_18px_rgba(50,40,90,0.07)]">
             <div className="rounded-xl bg-purple-100 p-3 text-xl text-purple-700">
               <FaTruckFast />
             </div>
-
             <div>
               <h3 className="font-bold">Delivery Estimates</h3>
               <p className="mt-1 text-sm text-gray-500">
@@ -451,12 +401,10 @@ export default function FindPharmacy() {
               </p>
             </div>
           </div>
-
           <div className="flex items-center gap-4 rounded-2xl border border-blue-100 bg-white p-5 shadow-[0_4px_18px_rgba(50,40,90,0.07)]">
             <div className="rounded-xl bg-blue-100 p-3 text-xl text-blue-700">
               <FaClock />
             </div>
-
             <div>
               <h3 className="font-bold">Quick Delivery</h3>
               <p className="mt-1 text-sm text-gray-500">
@@ -464,12 +412,10 @@ export default function FindPharmacy() {
               </p>
             </div>
           </div>
-
           <div className="flex items-center gap-4 rounded-2xl border border-green-100 bg-white p-5 shadow-[0_4px_18px_rgba(50,40,90,0.07)]">
             <div className="rounded-xl bg-green-100 p-3 text-xl text-green-700">
               <FaCapsules />
             </div>
-
             <div>
               <h3 className="font-bold">8 Listed Medicines</h3>
               <p className="mt-1 text-sm text-gray-500">
@@ -478,19 +424,16 @@ export default function FindPharmacy() {
             </div>
           </div>
         </section>
-
         {/* MEDICINE CARDS */}
         <section className="mb-10">
           <div className="mb-5 flex flex-wrap items-center justify-between gap-3">
             <h2 className="text-lg font-bold sm:text-xl">
               Available Medicines
             </h2>
-
             <p className="text-sm text-gray-500">
               {filteredMedicines.length} medicine(s) found
             </p>
           </div>
- 
           {filteredMedicines.length === 0 ? (
             <div className="rounded-xl border border-gray-100 bg-white p-10 text-center text-gray-500 shadow-sm">
               <FaMagnifyingGlass className="mx-auto mb-3 text-2xl" />
@@ -499,34 +442,29 @@ export default function FindPharmacy() {
           ) : (
             <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-4">
               {filteredMedicines.map((medicine) => (
-              <article
-              key={medicine.id}
-               className="overflow-hidden rounded-2xl border border-purple-200 bg-[#F3E8FF] shadow-md 
+                <article
+                  key={medicine.id}
+                  className="overflow-hidden rounded-2xl border border-purple-200 bg-[#F3E8FF] shadow-md 
                 transition-all duration-300 hover:-translate-y-1 hover:border-purple-300 hover:bg-[#EDE0FF] hover:shadow-lg"
-                  >     
-                
-                <div className="flex h-44 items-center justify-center bg-[#FAF5FF] p-4">
+                >
+                  <div className="flex h-44 items-center justify-center bg-[#FAF5FF] p-4">
                     <img
                       src={medicine.image}
                       alt={medicine.name}
                       className="h-full w-full object-contain"
                     />
                   </div>
-
                   <div className="p-5">
                     <h3 className="font-bold text-[#26334d]">
                       {medicine.name}
                     </h3>
-
                     <p className="mt-1 text-sm text-gray-500">
                       {medicine.category}
                     </p>
-
                     <div className="mt-4 flex items-center justify-between gap-2">
                       <span className="text-lg font-bold text-sky-600">
                         {formatPrice(medicine.price)}
                       </span>
-
                       <button
                         type="button"
                         onClick={() => handleBuyNow(medicine)}
@@ -541,23 +479,19 @@ export default function FindPharmacy() {
             </div>
           )}
         </section>
-
         {/* MEDICINE TABLE */}
         <section className="mb-10 overflow-hidden rounded-2xl border border-gray-100 bg-white shadow-[0_4px_18px_rgba(50,40,90,0.08)]">
           <div className="border-b border-gray-100 p-5">
             <h2 className="text-lg font-bold sm:text-xl">
               Medicine Listings
             </h2>
-
             <p className="mt-2 text-sm text-gray-500">
               Compare medicine details, pharmacies, prices, and delivery estimates.
             </p>
           </div>
-
           <div className="flex flex-wrap items-center justify-between gap-4 p-5">
             <div className="flex flex-wrap items-center gap-2 text-sm text-gray-600">
               <label htmlFor="entries">Show</label>
-
               <select
                 id="entries"
                 value={entries}
@@ -571,13 +505,10 @@ export default function FindPharmacy() {
                 <option value={7}>7</option>
                 <option value={8}>8</option>
               </select>
-
               <span>entries per page</span>
             </div>
-
             <div className="relative w-full sm:w-[260px]">
               <FaMagnifyingGlass className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
-
               <input
                 type="text"
                 value={tableSearch}
@@ -588,7 +519,6 @@ export default function FindPharmacy() {
               />
             </div>
           </div>
-
           <div className="w-full overflow-x-auto">
             <table className="w-full min-w-[950px] border-collapse text-left text-sm">
               <thead className="bg-[#f8f8fc] text-xs uppercase text-gray-500">
@@ -602,7 +532,6 @@ export default function FindPharmacy() {
                   <th className="px-5 py-4">ID</th>
                 </tr>
               </thead>
-
               <tbody>
                 {visibleMedicines.map((medicine) => (
                   <tr
@@ -616,17 +545,14 @@ export default function FindPharmacy() {
                           alt={medicine.name}
                           className="h-12 w-14 rounded-lg bg-white object-contain"
                         />
-
                         <span className="font-semibold">
                           {medicine.name}
                         </span>
                       </div>
                     </td>
-
                     <td className="px-5 py-4 text-gray-600">
                       {medicine.category}
                     </td>
-
                     <td className="px-5 py-4">
                       <div className="flex items-center gap-3">
                         <img
@@ -634,31 +560,25 @@ export default function FindPharmacy() {
                           alt={medicine.pharmacy}
                           className="h-10 w-12 rounded-lg border border-gray-100 object-cover shadow-sm"
                         />
-
                         <span className="whitespace-nowrap font-medium text-[#26334d]">
                           {medicine.pharmacy}
                         </span>
                       </div>
                     </td>
-
                     <td className="px-5 py-4">
                       {medicine.discount}
                     </td>
-
                     <td className="whitespace-nowrap px-5 py-4 font-semibold text-sky-600">
                       {formatPrice(medicine.price)}
                     </td>
-
                     <td className="whitespace-nowrap px-5 py-4">
                       {medicine.eta}–{medicine.eta + 10} min
                     </td>
-
                     <td className="px-5 py-4 text-gray-500">
                       {medicine.id}
                     </td>
                   </tr>
                 ))}
-
                 {visibleMedicines.length === 0 && (
                   <tr>
                     <td
@@ -672,13 +592,11 @@ export default function FindPharmacy() {
               </tbody>
             </table>
           </div>
-
           <div className="flex flex-wrap items-center justify-between gap-3 p-5 text-sm text-gray-500">
             <p>
               Showing {firstEntry} to {lastEntry} of{" "}
               {filteredMedicines.length} entries
             </p>
-
             <div className="flex items-center gap-2">
               <button
                 type="button"
@@ -688,11 +606,9 @@ export default function FindPharmacy() {
               >
                 Previous
               </button>
-
               <span className="rounded-lg bg-purple-600 px-3 py-2 font-semibold text-white">
                 {safePage} / {totalPages}
               </span>
-
               <button
                 type="button"
                 disabled={safePage === totalPages}
@@ -704,34 +620,29 @@ export default function FindPharmacy() {
             </div>
           </div>
         </section>
-
         {/* FOOTER */}
         <footer className="mt-12 flex flex-wrap items-center justify-between gap-4 border-t border-gray-200 py-6 text-sm text-gray-500">
           <p>
-            © 2026, made with{" "}
-            <span className="text-pink-500">♥</span> by{" "}
+            ©️ 2026, made with{" "}
+            <span className="text-pink-500">♥️</span> by{" "}
             <span className="font-semibold text-purple-600">
               MyPiHUB
             </span>{" "}
             for a better web.
           </p>
-
           <div className="flex flex-wrap gap-5">
             <Link to="/" className="hover:text-purple-600">
               MyPatientHUB
             </Link>
-
             <Link to="/about" className="hover:text-purple-600">
               About Us
             </Link>
-
             <Link to="/blog" className="hover:text-purple-600">
               Blog
             </Link>
           </div>
         </footer>
       </main>
-
       {/* MEDICINE DETAILS MODAL */}
       {selectedMedicine && (
         <div
@@ -749,7 +660,6 @@ export default function FindPharmacy() {
               <h2 className="text-xl font-bold">
                 Medicine Details
               </h2>
-
               <button
                 type="button"
                 onClick={() => setSelectedMedicine(null)}
@@ -759,54 +669,44 @@ export default function FindPharmacy() {
                 <FaXmark />
               </button>
             </div>
-
             <img
               src={selectedMedicine.image}
               alt={selectedMedicine.name}
               className="mx-auto mb-4 h-40 w-full object-contain"
             />
-
             <h3 className="text-lg font-bold">
               {selectedMedicine.name}
             </h3>
-
             <p className="mt-2 text-sm text-gray-500">
               {selectedMedicine.description}
             </p>
-
             <div className="mt-4 space-y-3 rounded-xl bg-gray-50 p-4 text-sm">
               <p>
                 <strong>Category:</strong>{" "}
                 {selectedMedicine.category}
               </p>
-
               <p className="flex items-center gap-2">
                 <FaLocationDot className="text-purple-500" />
                 <strong>Pharmacy:</strong>{" "}
                 {selectedMedicine.pharmacy}
               </p>
-
               <p>
                 <strong>Price:</strong>{" "}
                 {formatPrice(selectedMedicine.price)}
               </p>
-
               <p>
                 <strong>Discount:</strong>{" "}
                 {selectedMedicine.discount}
               </p>
-
               <p>
                 <strong>Estimated delivery:</strong>{" "}
                 {selectedMedicine.eta}–{selectedMedicine.eta + 10} minutes
               </p>
-
               <p className="text-xs leading-5 text-gray-500">
                 Prices, stock, and delivery times are demonstration data.
                 Please confirm with the pharmacy before ordering.
               </p>
             </div>
-
             <button
               type="button"
               onClick={() => {
@@ -822,7 +722,6 @@ export default function FindPharmacy() {
           </div>
         </div>
       )}
-
       {/* PHARMACY CHATBOT */}
       <div className="fixed bottom-5 right-5 z-50">
         {chatOpen && (
@@ -830,18 +729,15 @@ export default function FindPharmacy() {
             <div className="flex items-center justify-between bg-gradient-to-r from-purple-700 to-pink-600 p-4 text-white">
               <div className="flex items-center gap-3">
                 <FaRobot className="text-2xl" />
-
                 <div>
                   <h2 className="font-bold">
                     Pharmacy Assistant
                   </h2>
-
                   <p className="text-xs text-purple-100">
                     Medicine information demo
                   </p>
                 </div>
               </div>
-
               <button
                 type="button"
                 aria-label="Close chatbot"
@@ -851,7 +747,6 @@ export default function FindPharmacy() {
                 <FaXmark />
               </button>
             </div>
-
             <div
               aria-live="polite"
               className="flex-1 space-y-3 overflow-y-auto bg-[#faf9fd] p-3"
@@ -869,7 +764,6 @@ export default function FindPharmacy() {
                 </div>
               ))}
             </div>
-
             <form
               onSubmit={sendMessage}
               className="flex items-center gap-2 border-t border-gray-100 p-3"
@@ -882,7 +776,6 @@ export default function FindPharmacy() {
                 aria-label="Message pharmacy assistant"
                 className="min-w-0 flex-1 rounded-lg border border-gray-200 px-3 py-2 text-sm outline-none focus:border-purple-400"
               />
-
               <button
                 type="submit"
                 aria-label="Send message"
@@ -893,7 +786,6 @@ export default function FindPharmacy() {
             </form>
           </section>
         )}
-
         <button
           type="button"
           onClick={() => setChatOpen(!chatOpen)}

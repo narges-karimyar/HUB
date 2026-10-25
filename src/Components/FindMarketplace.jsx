@@ -44,7 +44,7 @@ export default function FindMarketplace() {
       service: "Food Panda",
       serviceImage: panda,
       image: fish,
-      price: 25,
+      price: 450,
       discount: 20,
       todayPick: true,
       special: "Fresh Catch",
@@ -56,7 +56,7 @@ export default function FindMarketplace() {
       service: "Grab Food",
       serviceImage: grab,
       image: riceMeat,
-      price: 9,
+      price: 250,
       discount: 0,
       todayPick: false,
       special: "Fresh Meal",
@@ -68,7 +68,7 @@ export default function FindMarketplace() {
       service: "Food Panda",
       serviceImage: panda,
       image: egg,
-      price: 15,
+      price: 180,
       discount: 0,
       todayPick: false,
       special: "Protein Rich",
@@ -80,7 +80,7 @@ export default function FindMarketplace() {
       service: "Food Panda",
       serviceImage: panda,
       image: beans,
-      price: 25,
+      price: 200,
       discount: 0,
       todayPick: false,
       special: "Healthy Choice",
@@ -92,7 +92,7 @@ export default function FindMarketplace() {
       service: "Grab Food",
       serviceImage: grab,
       image: eggsAvocado,
-      price: 18,
+      price: 300,
       discount: 0,
       todayPick: false,
       special: "Healthy Breakfast",
@@ -104,7 +104,7 @@ export default function FindMarketplace() {
       service: "Delivroo",
       serviceImage: deliv,
       image: steak,
-      price: 30,
+      price: 650,
       discount: 0,
       todayPick: false,
       special: "High Protein",
@@ -116,7 +116,7 @@ export default function FindMarketplace() {
       service: "Grab Food",
       serviceImage: grab,
       image: rice,
-      price: 12,
+      price: 150,
       discount: 0,
       todayPick: false,
       special: "Energy Boost",
@@ -128,7 +128,7 @@ export default function FindMarketplace() {
       service: "Food Panda",
       serviceImage: panda,
       image: chicken,
-      price: 20,
+      price: 300,
       discount: 0,
       todayPick: false,
       special: "Chef's Choice",
@@ -140,7 +140,7 @@ export default function FindMarketplace() {
       service: "Delivroo",
       serviceImage: deliv,
       image: fish,
-      price: 18,
+      price: 350,
       discount: 0,
       todayPick: false,
       special: "Low Fat",
@@ -425,7 +425,7 @@ export default function FindMarketplace() {
                   </div>
 
                   <p className="mt-4 font-extrabold text-[#16a6c9] text-xl">
-                    {todayPick.price} RM
+                    {todayPick.price} AFN
                   </p>
 
                   {/* NEW: BUY NOW FOR TODAY'S PICK */}
@@ -504,7 +504,7 @@ export default function FindMarketplace() {
                       </h3>
 
                       <span className="font-bold text-[#16a6c9]">
-                        {food.price} RM
+                        {food.price} AFN
                       </span>
                     </div>
 
@@ -591,7 +591,7 @@ export default function FindMarketplace() {
                         {food.name}
                       </p>
                       <p className="text-sm text-[#16a6c9] font-semibold">
-                        {food.price} RM
+                        {food.price} AFN
                       </p>
                     </div>
 
@@ -708,7 +708,7 @@ export default function FindMarketplace() {
                     </span>
 
                     <span className="text-gray-600">
-                      {food.price} RM
+                      {food.price} AFN
                     </span>
 
                     <span className="text-gray-500">
@@ -782,7 +782,7 @@ export default function FindMarketplace() {
                   </div>
 
                   <p className="shrink-0 text-xl font-extrabold text-[#16a6c9]">
-                    {selectedFood.price} RM
+                    {selectedFood.price} AFN
                   </p>
                 </div>
 
@@ -875,7 +875,7 @@ export default function FindMarketplace() {
                   onClick={placeOrder}
                   className="mt-6 w-full rounded-xl bg-gradient-to-r from-[#d946ef] to-[#7c3aed] py-3.5 text-white font-extrabold shadow-md transition-all duration-300 hover:scale-[1.01] hover:shadow-lg"
                 >
-                  BUY · {selectedFood.price} RM
+                  BUY · {selectedFood.price} AFN
                 </button>
 
                 <p className="mt-3 text-center text-xs text-gray-400">
